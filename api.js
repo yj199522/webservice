@@ -12,7 +12,7 @@ app.use(express.json());
 //Routes
 app.get("/healthz", (req, res) => {
     try {
-        res.json("server responds with 200 OK if it is healhty.", 200)
+        res.json("server responds with 200 OK if it is healhty.", 200);
     } catch (err) {
         res.json(err.message);
     }

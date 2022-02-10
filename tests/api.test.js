@@ -1,4 +1,4 @@
-const app = require("../app");
+const app = require("../api");
 const request = require("supertest");
 
 describe("GET /healthz", () => {
