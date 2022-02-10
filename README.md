@@ -1,5 +1,5 @@
 # Webservice
-``Rest API - Node.js``
+``Restful API - Node.js``
 
 ## About the project
 Created an node application to perform basic api using express
