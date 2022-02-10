@@ -19,9 +19,7 @@ app.get("/healthz", (req, res) => {
 })
 
 app.get('*', function(req, res){
-
-    res.send('Page not found!', 404);
-
+    res.status(404).json("Page not found!")
 });
 
 module.exports = app;
