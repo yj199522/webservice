@@ -16,7 +16,8 @@ Created an node application to perform basic api using express
 * *index.js* : It has it's logic to create server http and https and the API services.
 * *api.js* : Contain the basic node application 
 * *tests/api.test.js* : test/api.test.js: Contains unit test
-* *.github/workflows/test.js.yml: GitHub unit testing workflow
+* *.github/workflows/test.js.yml*: Perform unit test workflow
+* *.github/workflows/eslint.js.yml*: Perform eslint test workflow
   
 ## Teach Stack
 NodeJs
