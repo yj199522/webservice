@@ -10,8 +10,8 @@ on:
     branches: [ main ]
 
 jobs:
-  build:
-
+  test:
+    name: Unit Testing
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
