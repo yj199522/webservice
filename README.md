@@ -20,15 +20,15 @@ Created an node application to perform basic api using express
 * *.github/workflows/eslint.js.yml*: Perform eslint test workflow
   
 ## Teach Stack
-NodeJs
-ExpressJs Framework
-Jest
-GitHub Action
+* NodeJs
+* ExpressJs
+* Jest
+* GitHub Action
 
 ## Features
-Rest Apis
-Unit Testing
-GitHub Workflow testing for before and after PR merge 
+* Rest Apis
+* Unit Testing
+* GitHub Workflow testing for before and after PR merge 
 
 ## Endpoints
 /healthz :
