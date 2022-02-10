@@ -11,7 +11,7 @@ on:
 
 jobs:
   build:
-    name: Testing Unit Test
+
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -21,7 +21,7 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - name: package install
     - run: npm i
-    - name: run build
+    - name: Build
     - run: npm run build --if-present
-    - name: run test
+    - name: Unit Test
     - run: npm test
