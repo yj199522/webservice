@@ -6,17 +6,19 @@
   "scripts": {
     "lint": "eslint *.js",
     "start": "nodemon index",
-    "test": "cross-env NODE_ENV=test jest --testTimeout=10000",
+    "test": "jest --testTimeout=10000",
     "pretest": "cross-env NODE_ENV=test"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^5.0.1",
     "cors": "^2.8.5",
     "eslint": "^8.8.0",
     "express": "^4.17.2",
     "nodemon": "^2.0.15",
-    "pg": "^8.7.3"
+    "pg": "^8.7.3",
+    "uuid": "^8.3.2"
   },
   "jest": {
     "testEnvironment": "node",
