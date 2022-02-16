@@ -1,5 +1,5 @@
 # Webservice
-``Rest API - Node.js``
+``Restful API - Node.js``
 
 ## About the project
 Created an node application to perform CRU operations using http request
@@ -22,20 +22,32 @@ Created an node application to perform CRU operations using http request
 * *controllers/viewUser.js* : Main logic for fetching users that includes select query
 * *tests/api.test.js* : Contains unit for api test
 * *tests/helper.test.js* : Contains unit helper function test
+* *.github/workflows/eslint.js.yml*: Perform eslint test workflow
+* *.github/workflows/test.js.yml*: Perform unit test workflow
   
 ## Teach Stack
-NodeJs
-ExpressJs Framework
-PostgreSQL
+* NodeJs
+* ExpressJs Framework
+* PostgreSQL
+* Jest
+* GitHub Action
 
 ## Features
-Rest Apis
-Base Authentication
-Password Encryption
+* Rest Apis
+* Base Authentication
+* Password Encryption
+* Unit Testing
+* GitHub Workflow testing for before and after PR merge 
 
 ## Endpoints
-/v1/user :
+* /healthz :
 
+- *Methods: GET* : 
+    - Description: Simple GET api to test.
+    - url : /healthz
+
+* /v1/user :
+  
 - *Methods: GET* : 
     - Description: Get User Data.
     - Query Strings: none
@@ -50,4 +62,5 @@ Password Encryption
     - url : /v1/user/self
 
 ## External Libraries
-bycrypt
+* bycrypt
+* supertest
