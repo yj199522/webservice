@@ -54,11 +54,11 @@ Created an node application to perform CRU operations using http request
       - url : /v1/user/self
   - *Methods: POST* : 
       - Description: Create a new user.
-      - Body: first_name, last_name, phone, password
+      - Body: first_name, last_name, username, password
       - url : /v1/user
   - *Methods: PUT* : 
       - Description: Update a user.
-      - Body: first_name, last_name, phone, password
+      - Body: first_name, last_name, password
       - url : /v1/user/self
 
 ## External Libraries
