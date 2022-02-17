@@ -9,9 +9,7 @@ const viewUser = (req, res) => {
     const [username, password] = basicAuth(req);
 
     if (!username || !password) {
-        return res.status(403).json({
-            message: "Forbidden Request"
-        });
+        return res.status(403).json("Forbidden Request");
     }
 
     let queries = "SELECT * from users where username = $1";

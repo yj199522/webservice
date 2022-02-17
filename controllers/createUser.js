@@ -10,16 +10,16 @@ const {
 const pool = require("../db");
 
 const createUser = (req, res) => {
-    const fieldNeeded = ["first_name", "last_name", "username", "password"];
+    // const fieldNeeded = ["first_name", "last_name", "username", "password"];
     const reqKey = req.body ? Object.keys(req.body) : null;
 
     if (!reqKey || !reqKey.length) {
         return res.status(400).json("No information is provided to create user");
     }
-
-    if (JSON.stringify(fieldNeeded) !== JSON.stringify(reqKey)) {
-        return res.status(400).json("Only first_name, last_name, username, and password is required");
-    }
+    
+    // if (JSON.stringify(fieldNeeded) !== JSON.stringify(reqKey)) {
+    //     return res.status(400).json("Only first_name, last_name, username, and password is required");
+    // }
 
     const id = uuidv4();
     const account_created = new Date().toISOString();
@@ -34,8 +34,12 @@ const createUser = (req, res) => {
 
     const isEmailCorrect = validateEmail(username);
 
-    if (!password || !first_name || !last_name || !isEmailCorrect || password.length < 8 || !first_name.length || !last_name.length) {
+    if (!password || !username || !first_name || !last_name || password.length < 8 || !first_name.length || !last_name.length) {
         return res.status(400).json("Incorrect data format");
+    }
+
+    if (!isEmailCorrect) {
+        return res.status(400).json("Enter proper username");
     }
 
     generatePasswordHash(password)
