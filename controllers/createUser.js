@@ -10,16 +10,24 @@ const {
 const pool = require("../db");
 
 const createUser = (req, res) => {
-    // const fieldNeeded = ["first_name", "last_name", "username", "password"];
+    const fieldNeeded = ["first_name", "last_name", "username", "password", "account_created","account_updated"];
     const reqKey = req.body ? Object.keys(req.body) : null;
 
     if (!reqKey || !reqKey.length) {
         return res.status(400).json("No information is provided to create user");
     }
-    
-    // if (JSON.stringify(fieldNeeded) !== JSON.stringify(reqKey)) {
-    //     return res.status(400).json("Only first_name, last_name, username, and password is required");
-    // }
+
+    let checking = true;
+
+    reqKey.forEach(val => {
+        if (fieldNeeded.indexOf(val) < 0) {
+            checking = false;
+        }
+    })
+
+    if (!checking) {
+        return res.status(400).json("Only first_name, last_name, username, and password is required");
+    }
 
     const id = uuidv4();
     const account_created = new Date().toISOString();
@@ -39,7 +47,7 @@ const createUser = (req, res) => {
     }
 
     if (!isEmailCorrect) {
-        return res.status(400).json("Enter proper username");
+        return res.status(400).json("Enter proper email");
     }
 
     generatePasswordHash(password)
