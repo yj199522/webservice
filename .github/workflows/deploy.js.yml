@@ -32,17 +32,14 @@ jobs:
 
     - name: Packer build
       uses: ExitoLab/packer_build_action_aws@v0.2.10
-      run: |
-        pwd
-        ls
-        # with:
-        #   templateFile: 'ami.json'
-        #   workingDir: 'ami'
-        #   varFile: 'variables.json'
-        # env:
-        #   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        #   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        #   AWS_DEFAULT_REGION: us-east-1
+      with:
+        templateFile: 'nodeApi.pkr.hcl'
+        workingDir: 'packer'
+        varFile: 'var.json'
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        AWS_DEFAULT_REGION: us-east-1
     # - name: Validate Packer
     #   run: |
     #     cd packer
