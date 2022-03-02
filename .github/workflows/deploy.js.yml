@@ -12,8 +12,6 @@ jobs:
       ARTIFACT_NAME: Network-Structure-Cloud-Computing-webservice-${{ github.run_number }}.zip
       AWS_ACCESS_KEY: ${{secrets.AWS_ACCESS_KEY}}
       AWS_SECRET_KEY: ${{secrets.AWS_SECRET_KEY}}
-      AWS_REGION: ${{secrets.AWS_REGION}}
-      SUBNET_ID: ${{secrets.SUBNET_ID}}
     
     steps:
     - uses: actions/checkout@v2
@@ -35,13 +33,11 @@ jobs:
     - name: Validate Packer
       run: |
         cd packer
-        echo ${{ env.AWS_REGION }}
+        echo ${{ env.AWS_ACCESS_KEY }}
         packer init nodeApi.pkr.hcl
         packer build \
          -var 'aws_access_key=$AWS_ACCESS_KEY' \
          -var 'aws_secret_key=$AWS_SECRET_KEY' \
-         -var 'aws_region=$AWS_REGION' \
-         -var 'subnet_id=$SUBNET_ID' \
          -var-file=var.json nodeApi.pkr.hcl
 
     - name: Run Packer
@@ -50,6 +46,4 @@ jobs:
          packer build \
          -var 'aws_access_key=$AWS_ACCESS_KEY' \
          -var 'aws_secret_key=$AWS_SECRET_KEY' \
-         -var 'aws_region=$AWS_REGION' \
-         -var 'subnet_id=$SUBNET_ID' \
          -var-file=var.json nodeApi.pkr.hcl
