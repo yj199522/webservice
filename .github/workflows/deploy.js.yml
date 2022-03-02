@@ -1,0 +1,32 @@
+name: MasterDeployCI
+
+on:
+  push:
+    branches:
+      - main
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      ARTIFACT_NAME: Network-Structure-Cloud-Computing-webservice-${{ github.run_number }}.zip
+      CODEDEPLOY_APPLICATION_NAME: csye6225-webservice
+      CODEDEPLOY_GROUP_NAME: csye6225-webservice-deployment
+    
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ matrix.node-version }}
+
+    - name: Install Dependencies
+      run: |
+        sudo apt-get update && sudo apt-get install -y wget zip unzip jq && npm test
+
+    - name: Build Deployment Artifact
+      run: | 
+        mkdir codedeploy_artifact
+        zip -r build_artifact .
+        pwd
+        mv build_artifact.zip codedeploy_artifact
+        cd codedeploy_artifact
