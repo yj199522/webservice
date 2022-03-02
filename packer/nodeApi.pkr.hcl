@@ -43,6 +43,18 @@ variable "ssh_name" {
   sensitive = true
 }
 
+variable "aws_demo_account_id" {
+  type      = string
+  default   = ""
+  sensitive = true
+}
+
+variable "zip_file_path" {
+  type      = string
+  default   = ""
+  sensitive = true
+}
+
 locals {
   timestamp = regex_replace(timestamp(), "[- TZ:]", "")
 }
@@ -53,6 +65,7 @@ source "amazon-ebs" "nodeApi" {
   region        = "${var.aws_region}"
   instance_type = "${var.instance_type}"
   subnet_id     = "${var.subnet_id}"
+  ami_users     = ["${var.aws_demo_account_id}"]
   source_ami_filter {
     filters = {
       name                = "amzn2-ami-hvm-2.*.1-x86_64-gp2"
@@ -73,7 +86,7 @@ build {
   ]
 
   provisioner "file" {
-    source      = "/home/runner/work/webservice/webservice/codedeploy_artifact/nodeApi.zip"
+    source      = "${var.zip_file_path}"
     destination = "/home/ec2-user/nodeApi.zip"
   }
 

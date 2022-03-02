@@ -4,5 +4,7 @@
     "aws_region": "",
     "subnet_id": "",
     "instance_type": "t2.micro",
-    "ssh_name": "ec2-user"
+    "ssh_name": "ec2-user",
+    "aws_demo_account_id": "",
+    "zip_file_path":""
 }
