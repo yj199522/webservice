@@ -10,7 +10,7 @@ sudo yum install -y nodejs
 
 sudo yum install unzip -y
 cd ~/ && unzip nodeApi.zip
-cd ~/webservice-main/ && npm i
+npm i
 
 sudo mv /tmp/nodeApi.service /etc/systemd/system/nodeApi.service
 sudo systemctl enable nodeApi.service
