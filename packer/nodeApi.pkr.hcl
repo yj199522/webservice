@@ -50,7 +50,7 @@ locals {
 source "amazon-ebs" "nodeApi" {
   access_key             = "${var.aws_access_key}"
   secret_key             = "${var.aws_secret_key}"
-  region                 = "${var.aws_regions}"
+  region                 = "${var.aws_region}"
   instance_type          = "${var.instance_type}"
   subnet_id              = "${var.subnet_id}"
   skip_region_validation = "false"

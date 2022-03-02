@@ -36,9 +36,19 @@ jobs:
       run: |
         cd packer
         packer init nodeApi.pkr.hcl
-        packer build -var-file=var.json nodeApi.pkr.hcl
+        packer build \
+         -var 'aws_access_key=$AWS_ACCESS_KEY' \
+         -var 'aws_secret_key=$AWS_SECRET_KEY' \
+         -var 'aws_region=$AWS_REGION' \
+         -var 'subnet_id=$SUBNET_ID' \
+         -var-file=var.json nodeApi.pkr.hcl
 
     - name: Run Packer
       run: |
          cd packer
-         packer build -var-file=var.json nodeApi.pkr.hcl
+         packer build \
+          -var 'aws_access_key=$AWS_ACCESS_KEY' \
+         -var 'aws_secret_key=$AWS_SECRET_KEY' \
+         -var 'aws_region=$AWS_REGION' \
+         -var 'subnet_id=$SUBNET_ID' \
+         -var-file=var.json nodeApi.pkr.hcl
