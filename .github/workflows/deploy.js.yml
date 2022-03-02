@@ -30,21 +30,12 @@ jobs:
     needs: build
     steps:
       - name: Run Packer Container - Validate Template
-        run: |
-          cd packer
-          echo ${{ env.AWS_ACCESS_KEY }}
-          packer init nodeApi.pkr.hcl
-          packer validate \
-          -var 'aws_access_key=$AWS_ACCESS_KEY' \
-          -var 'aws_secret_key=$AWS_SECRET_KEY' \
-          -var-file=var.json nodeApi.pkr.hcl
         # uses: docker://hashicorp/packer:light
         # with:
-        #   working-directory: "./packer"
-        #   args: "validate -var-file=var.json nodeApi.pkr.hcl"
-        # run: |
-        #   pwd
-        #   ls
+        #   path: "./packer"
+        run: |
+          pwd
+          ls
 
   # packer_build:
   #   runs-on: ubuntu-latest
