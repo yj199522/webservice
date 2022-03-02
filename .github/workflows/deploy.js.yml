@@ -7,7 +7,7 @@ on:
       - main
 jobs:
   packer_validate:
-    runs-on: hashicorp/packer:1.6.4
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
     - name: Use Node.js ${{ matrix.node-version }}
