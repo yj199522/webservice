@@ -33,7 +33,7 @@ jobs:
     - name: Validate Packer
       run: |
         cd packer
-        packer init
+        packer init nodeApi.pkr.hcl
         packer validate -var-file=var.json nodeApi.pkr.hcl
 
     - name: Run Packer
