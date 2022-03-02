@@ -77,9 +77,11 @@ source "amazon-ebs" "nodeApi" {
   }
   launch_block_device_mappings {
     device_name           = "/dev/sda1"
+    volume_type           = "gp2"
     delete_on_termination = true
     volume_size           = 8
   }
+  ssh_timeout     = "15m"
   ssh_username    = "${var.ssh_name}"
   ami_name        = "nodeApi-app-${local.timestamp}"
   ami_description = "Amazon Linux AMI for CSYE 6225"
