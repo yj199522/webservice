@@ -40,7 +40,6 @@ jobs:
         env:
          AWS_ACCESS_KEY: ${{secrets.AWS_ACCESS_KEY}}
          AWS_SECRET_KEY: ${{secrets.AWS_SECRET_KEY}}
-         AWS_REGION: us-east-1
         run: |
           cd packer
           packer build -var-file=var.json nodeApi.pkr.hcl
