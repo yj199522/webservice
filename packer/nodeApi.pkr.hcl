@@ -78,6 +78,7 @@ source "amazon-ebs" "nodeApi" {
   launch_block_device_mappings {
     device_name           = "/dev/sda1"
     delete_on_termination = true
+    volume_size           = 8
   }
   ssh_username    = "${var.ssh_name}"
   ami_name        = "nodeApi-app-${local.timestamp}"
