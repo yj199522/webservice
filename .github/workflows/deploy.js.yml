@@ -29,7 +29,7 @@ jobs:
       uses: dawitnida/packer-github-actions/validate@master
       with:
         templateFile: 'nodeApi.pkr.hcl'
-        workingDir: 'packer'
+        workingDir: '/home/runner/work/webservice/webservice/packer'
         varFile: 'var.json'
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -52,7 +52,7 @@ jobs:
       uses: ExitoLab/packer_build_action_aws@v0.2.10
       with:
         templateFile: 'nodeApi.pkr.hcl'
-        workingDir: 'packer'
+        workingDir: '/home/runner/work/webservice/webservice/packer'
         varFile: 'var.json'
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
