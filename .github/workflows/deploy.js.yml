@@ -41,7 +41,8 @@ jobs:
           AWS_REGION: ${{secrets.AWS_REGION}}
           SUBNET_ID: ${{secrets.SUBNET_ID}}
           DEMO_ACCOUNT_ID: ${{secrets.DEMO_ACCOUNT_ID}}
-          ZIP_FILE_PATH: ${{secrets.ZIP_FILE_PATH}}
         run: |
           cd packer
-          packer build -var-file=var.json nodeApi.pkr.hcl
+          packer build \
+          -var "zip_file_path=/home/runner/work/webservice/webservice/codedeploy_artifact/nodeApi.zip" \
+          -var-file=var.json nodeApi.pkr.hcl
