@@ -75,6 +75,12 @@ source "amazon-ebs" "nodeApi" {
     most_recent = true
     owners      = ["amazon"]
   }
+  launch_block_device_mappings {
+    device_name           = "/dev/sda1",
+    delete_on_termination = true,
+    volume_type           = "gp2",
+    volume_size           = 8
+  }
   ssh_username    = "${var.ssh_name}"
   ami_name        = "nodeApi-app-${local.timestamp}"
   ami_description = "Amazon Linux AMI for CSYE 6225"
