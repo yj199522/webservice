@@ -19,7 +19,6 @@ sudo /usr/pgsql-13/bin/postgresql-13-setup initdb
 sudo systemctl stop postgresql-13.service
 sudo systemctl start postgresql-13.service
 sudo systemctl enable postgresql-13.service
-sudo systemctl status postgresql-13.service
 
 sudo -u postgres psql <<EOF
           \x

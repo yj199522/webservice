@@ -18,7 +18,9 @@ jobs:
       uses: actions/setup-node@v2
       with:
         node-version: ${{ matrix.node-version }}
-    - run: |
+  
+    - name: Run Packer Container - Validate Template
+      run: |
         cd packer
         packer init nodeApi.pkr.hcl
         packer validate -var-file=var.json nodeApi.pkr.hcl
