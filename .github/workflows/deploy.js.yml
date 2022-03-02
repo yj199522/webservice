@@ -29,3 +29,10 @@ jobs:
         cd codedeploy_artifact
         pwd
         ls
+    
+    - name: Validate Packer
+      run: |
+        pwd
+        cd
+        pwd
+        ls
