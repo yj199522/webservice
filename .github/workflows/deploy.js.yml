@@ -6,7 +6,7 @@ on:
     branches:
       - main
 jobs:
-  build:
+  packer_build:
     runs-on: ubuntu-latest
     env:
       ARTIFACT_NAME: Network-Structure-Cloud-Computing-webservice-${{ github.run_number }}.zip
@@ -29,16 +29,12 @@ jobs:
         zip -r nodeApi . -x ".git/*" ".github/*" "node_modules/*" "package-lock.json"
         mv nodeApi.zip codedeploy_artifact
         cd codedeploy_artifact
-    
-  packer_build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v1
-      - name: Packer build
-        uses: ExitoLab/packer_build_action_aws@v0.2.10
-        run: |
-          pwd
-          ls
+
+    - name: Packer build
+      uses: ExitoLab/packer_build_action_aws@v0.2.10
+      run: |
+        pwd
+        ls
         # with:
         #   templateFile: 'ami.json'
         #   workingDir: 'ami'
