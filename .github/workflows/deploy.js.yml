@@ -23,7 +23,6 @@ jobs:
         mkdir codedeploy_artifact
         zip -r nodeApi . -x ".git/*" ".github/*" "node_modules/*" "package-lock.json"
         mv nodeApi.zip codedeploy_artifact
-        cd codedeploy_artifact
 
     - name: Run Packer Container - Validate Template
       uses: docker://hashicorp/packer:light
