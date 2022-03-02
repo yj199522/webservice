@@ -2,7 +2,7 @@
     "aws_access_key": "",
     "aws_secret_key": "",
     "aws_region": "",
-    "subnet_id": "subnet-054906f865a1adbb4",
+    "subnet_id": "",
     "instance_type": "t2.micro",
     "ssh_name": "ec2-user"
 }
