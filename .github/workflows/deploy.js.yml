@@ -29,12 +29,13 @@ jobs:
     runs-on: ubuntu-latest
     env:
       working-directory: "./packer"
-    needs: build
+    # needs: build
     steps:
       - name: Run Packer Container - Validate Template
         uses: docker://hashicorp/packer:light
         with:
-          args: "validate -var-file=github/workspace/webservice/webservice/packer/var.json /github/workspace/webservice/webservice/packer/nodeApi.pkr.hcl"
+          path: "./packer"
+          args: "validate -var-file=var.json nodeApi.pkr.hcl"
         # run: |
         #   pwd
         #   ls
