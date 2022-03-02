@@ -19,7 +19,7 @@ variable "subnet_id" {
   sensitive = true
 }
 
-variable "aws_regions" {
+variable "aws_region" {
   type      = string
   default   = env("AWS_REGION")
   sensitive = true
