@@ -34,7 +34,7 @@ jobs:
       - name: Run Packer Container - Validate Template
         uses: docker://hashicorp/packer:light
         with:
-          args: "validate -var-file=./packer/var.json ./packer/nodeApi.pkr.hcl"
+          args: "validate -var-file=/home/runner/work/webservice/webservice/packer/var.json /home/runner/work/webservice/webservice/packer/nodeApi.pkr.hcl"
         # run: |
         #   pwd
         #   ls
