@@ -11,9 +11,6 @@ jobs:
     runs-on: ubuntu-latest
     env:
       ARTIFACT_NAME: csye6225-webapp-${{ github.run_number }}.zip
-      AWS_ACCESS_KEY: ${{secrets.AWS_ACCESS_KEY}}
-      AWS_SECRET_KEY: ${{secrets.AWS_SECRET_KEY}}
-      AWS_REGION: us-east-1
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js ${{ matrix.node-version }}
