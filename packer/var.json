@@ -1,8 +1,8 @@
 {
     "aws_access_key": "",
     "aws_secret_key": "",
-    "aws_region": "us-east-1",
-    "subnet_id": "subnet-0d21dc94e2c42fd2f",
+    "aws_region": "",
+    "subnet_id": "",
     "instance_type": "t2.micro",
     "ssh_name": "ec2-user"
 }
