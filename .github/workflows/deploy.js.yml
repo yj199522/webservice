@@ -34,18 +34,16 @@ jobs:
         run: |
           cd packer
           packer init nodeApi.pkr.hcl
-          packer validate \
-           -var 'aws_access_key=$AWS_ACCESS_KEY' \
-           -var 'aws_secret_key=$AWS_SECRET_KEY' \
-           -var-file=var.json nodeApi.pkr.hcl
+          packer validate -var-file=var.json nodeApi.pkr.hcl
       
       - name: Validate Packer
+        env:
+         AWS_ACCESS_KEY: ${{secrets.AWS_ACCESS_KEY}}
+         AWS_SECRET_KEY: ${{secrets.AWS_SECRET_KEY}}
+         AWS_REGION: us-east-1
         run: |
           cd packer
-          packer build \
-            -var 'aws_access_key=$AWS_ACCESS_KEY' \
-            -var 'aws_secret_key=$AWS_SECRET_KEY' \
-            -var-file=var.json nodeApi.pkr.hcl
+          packer build -var-file=var.json nodeApi.pkr.hcl
 
   # validate:
   #   runs-on: ubuntu-latest
