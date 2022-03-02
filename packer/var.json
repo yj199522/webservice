@@ -5,6 +5,6 @@
     "subnet_id": "",
     "instance_type": "t2.micro",
     "ssh_name": "ec2-user",
-    "ami_users": "",
+    "ami_users": [],
     "zip_file_path":""
 }
