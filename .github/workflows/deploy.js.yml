@@ -26,7 +26,7 @@ jobs:
         cd codedeploy_artifact
 
     - name: Run Packer Container - Validate Template
-    - uses: docker://hashicorp/packer:light
+      uses: docker://hashicorp/packer:light
       with:
           args: "validate  -var-file=./packer/var.json ./packer/nodeApi.pkr.hcl"
 
