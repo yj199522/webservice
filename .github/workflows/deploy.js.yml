@@ -22,21 +22,31 @@ jobs:
       run: | 
         mkdir codedeploy_artifact
         zip -r nodeApi . -x ".git/*" ".github/*" "node_modules/*" "package-lock.json"
-        mv nodeApi.zip codedeploy_artifact
-        cd codedeploy_artifact
 
-  validate:
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - uses: actions/checkout@v2
-      - name: Run Packer Container - Validate Template
-        # uses: docker://hashicorp/packer:light
-        # with:
-        #   path: "./packer"
-        run: |
-          pwd
-          ls
+    - name: Artifact File
+      run: |
+        pwd
+        ls
+    # - uses: actions/upload-artifact@v2
+    #   with:
+    #     name: my-artifact
+    #     path: path/to/artifact/world.txt
+
+  # validate:
+  #   runs-on: ubuntu-latest
+  #   needs: build
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - uses: actions/setup-node@v2
+  #       with:
+  #         node-version: ${{ matrix.node-version }}
+  #     - name: Run Packer Container - Validate Template
+  #     - uses: docker://hashicorp/packer:light
+  #       # with:
+  #       #   path: "./packer"
+  #       run: |
+  #         pwd
+  #         ls
 
   # packer_build:
   #   runs-on: ubuntu-latest
