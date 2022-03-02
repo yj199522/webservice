@@ -21,7 +21,7 @@ jobs:
 
     - name: Install Dependencies
       run: |
-        sudo apt-get update && sudo apt-get install -y wget zip unzip jq && npm test
+        npm i && npm test
 
     - name: Build Deployment Artifact
       run: | 
