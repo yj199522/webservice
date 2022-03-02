@@ -35,7 +35,7 @@ jobs:
     - name: Validate Packer
       run: |
         cd packer
-        echo ${{ secrets.AWS_REGION }}
+        echo ${{ AWS_REGION }}
         packer init nodeApi.pkr.hcl
         packer build \
          -var 'aws_access_key=$AWS_ACCESS_KEY' \
