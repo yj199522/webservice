@@ -9,6 +9,9 @@ jobs:
     runs-on: ubuntu-latest
     env:
       ARTIFACT_NAME: Network-Structure-Cloud-Computing-webservice-${{ github.run_number }}.zip
+      aws_access_key: secrets.AWS_ACCESS_KEY
+      aws_secret_key: secrets.AWS_SECRET_KEY
+      aws_region: AWS_REGION
     
     steps:
     - uses: actions/checkout@v2
@@ -30,7 +33,7 @@ jobs:
     - name: Validate Packer
       run: |
         cd packer
-        packer validate  -var "aws_access_key=${{secrets.AWS_ACCESS_KEY}}" \ -var "aws_secret_key=${{secrets.AWS_SECRET_KEY}}" \ -var "aws_region=${{secrets.AWS_REGION}}"  -var-file=var.json nodeApi.pkr.hcl
+        packer validate -var-file=var.json nodeApi.pkr.hcl
 
     - name: Run Packer
       run: |
