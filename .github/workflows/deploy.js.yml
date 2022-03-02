@@ -30,20 +30,37 @@ jobs:
         mv nodeApi.zip codedeploy_artifact
         cd codedeploy_artifact
     
-    - name: Validate Packer
-      run: |
-        cd packer
-        echo ${{ env.AWS_ACCESS_KEY }}
-        packer init nodeApi.pkr.hcl
-        packer build \
-         -var 'aws_access_key=$AWS_ACCESS_KEY' \
-         -var 'aws_secret_key=$AWS_SECRET_KEY' \
-         -var-file=var.json nodeApi.pkr.hcl
+  packer_build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Packer build
+        uses: ExitoLab/packer_build_action_aws@v0.2.10
+        run: |
+          pwd
+          ls
+        # with:
+        #   templateFile: 'ami.json'
+        #   workingDir: 'ami'
+        #   varFile: 'variables.json'
+        # env:
+        #   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        #   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        #   AWS_DEFAULT_REGION: us-east-1
+    # - name: Validate Packer
+    #   run: |
+    #     cd packer
+    #     echo ${{ env.AWS_ACCESS_KEY }}
+    #     packer init nodeApi.pkr.hcl
+    #     packer build \
+    #      -var 'aws_access_key=$AWS_ACCESS_KEY' \
+    #      -var 'aws_secret_key=$AWS_SECRET_KEY' \
+    #      -var-file=var.json nodeApi.pkr.hcl
 
-    - name: Run Packer
-      run: |
-         cd packer
-         packer build \
-         -var 'aws_access_key=$AWS_ACCESS_KEY' \
-         -var 'aws_secret_key=$AWS_SECRET_KEY' \
-         -var-file=var.json nodeApi.pkr.hcl
+    # - name: Run Packer
+    #   run: |
+    #      cd packer
+    #      packer build \
+    #      -var 'aws_access_key=$AWS_ACCESS_KEY' \
+    #      -var 'aws_secret_key=$AWS_SECRET_KEY' \
+    #      -var-file=var.json nodeApi.pkr.hcl
