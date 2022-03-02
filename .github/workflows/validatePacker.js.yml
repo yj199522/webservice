@@ -18,9 +18,11 @@ jobs:
       aws_region: secrets.AWS_REGION
       subnet_id: secrets.SUBNET_ID
     steps:
-    - name: Validate Packer
-      run: |
-        cd /home/runner/work/webservice/webservice/packer
+     - uses: actions/checkout@v2
+     - name: Use Node.js ${{ matrix.node-version }}
+       uses: actions/setup-node@v2
+       with:
+        node-version: ${{ matrix.node-version }}
+     - name: Validate Packer
+       run: |
         ls
-        packer init nodeApi.pkr.hcl
-        packer validate -var-file=var.json nodeApi.pkr.hcl
