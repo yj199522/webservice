@@ -1,4 +1,7 @@
-name: Master Deploy
+# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+name: AMI Main Deploy
 
 on:
   push:
@@ -6,7 +9,7 @@ on:
       - main
 
 jobs:
-  build:
+  packer_build:
     runs-on: ubuntu-latest
     env:
       ARTIFACT_NAME: csye6225-webapp-${{ github.run_number }}.zip
@@ -22,7 +25,7 @@ jobs:
         run: |
           npm i && npm test
 
-      - name: Build Zip File
+      - name: Build zip File
         run: |
           mkdir codedeploy_artifact
           zip -r nodeApi . -x ".git/*" ".github/*" "node_modules/*" "package-lock.json" "packer/*"
@@ -40,7 +43,6 @@ jobs:
           AWS_SECRET_KEY: ${{secrets.AWS_SECRET_KEY}}
           AWS_REGION: ${{secrets.AWS_REGION}}
           SUBNET_ID: ${{secrets.SUBNET_ID}}
-          DEMO_ACCOUNT_ID: ${{secrets.DEMO_ACCOUNT_ID}}
         run: |
           cd packer
           packer build \
