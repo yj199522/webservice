@@ -43,12 +43,6 @@ variable "ssh_name" {
   sensitive = true
 }
 
-variable "ami_name" {
-  type      = string
-  default   = ""
-  sensitive = true
-}
-
 variable "ami_users" {
   type      = string
   default   = ""
@@ -66,7 +60,6 @@ locals {
 }
 
 source "amazon-ebs" "nodeApi" {
-  ami_name      = "${var.ami_name}"
   access_key    = "${var.aws_access_key}"
   secret_key    = "${var.aws_secret_key}"
   region        = "${var.aws_region}"
