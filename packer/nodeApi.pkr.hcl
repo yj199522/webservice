@@ -19,7 +19,7 @@ variable "subnet_id" {
   sensitive = true
 }
 
-variable "aws_region" {
+variable "aws_regions" {
   type      = string
   default   = env("AWS_REGION")
   sensitive = true
@@ -50,7 +50,7 @@ locals {
 source "amazon-ebs" "nodeApi" {
   access_key    = "${var.aws_access_key}"
   secret_key    = "${var.aws_secret_key}"
-  region        = "${var.aws_region}"
+  region        = "${var.aws_regions}"
   instance_type = "${var.instance_type}"
   subnet_id     = "${var.subnet_id}"
   source_ami_filter {

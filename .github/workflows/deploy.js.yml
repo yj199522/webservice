@@ -12,7 +12,7 @@ jobs:
       ARTIFACT_NAME: Network-Structure-Cloud-Computing-webservice-${{ github.run_number }}.zip
       aws_access_key: secrets.AWS_ACCESS_KEY
       aws_secret_key: secrets.AWS_SECRET_KEY
-      aws_region: secrets.AWS_REGION
+      aws_region: secrets.AWS_REGIONs
       subnet_id: secrets.SUBNET_ID
     
     steps:
@@ -39,7 +39,7 @@ jobs:
         packer build \
          -var 'aws_access_key=${{secrets.AWS_ACCESS_KEY}}' \
          -var 'aws_secret_key=${{secrets.AWS_SECRET_KEY}}' \
-         -var 'aws_region=${{secrets.AWS_REGION}}' \
+         -var 'aws_regions=${{secrets.AWS_REGION}}' \
          -var 'subnet_id=${{secrets.SUBNET_ID}}' \
          -var-file=var.json nodeApi.pkr.hcl
 
