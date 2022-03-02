@@ -33,6 +33,4 @@ jobs:
     - name: Validate Packer
       run: |
         pwd
-        cd
-        pwd
         ls
