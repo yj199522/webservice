@@ -53,6 +53,7 @@ source "amazon-ebs" "nodeApi" {
   region        = "${var.aws_regions}"
   instance_type = "${var.instance_type}"
   subnet_id     = "${var.subnet_id}"
+  skip_region_valiation = "false"
   source_ami_filter {
     filters = {
       name                = "amzn2-ami-hvm-2.*.1-x86_64-gp2"
