@@ -40,6 +40,8 @@ jobs:
           AWS_SECRET_KEY: ${{secrets.AWS_SECRET_KEY}}
           AWS_REGION: ${{secrets.AWS_REGION}}
           SUBNET_ID: ${{secrets.SUBNET_ID}}
+          AMI_USERS: ${{secrets.AMI_USERS}}
+          ZIP_FILE_PATH: ${{secrets.ZIP_FILE_PATH}}
         run: |
           cd packer
           packer build -var-file=var.json nodeApi.pkr.hcl

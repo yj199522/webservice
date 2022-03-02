@@ -4,5 +4,8 @@
     "aws_region": "",
     "subnet_id": "",
     "instance_type": "t2.micro",
-    "ssh_name": "ec2-user"
+    "ssh_name": "ec2-user",
+    "ami_name": "csye6225-webservice",
+    "ami_users": "",
+    "zip_file_path":""
 }
