@@ -10,7 +10,7 @@ on:
 
 jobs:
   test:
-    name: Unit Testing
+    name: Run Packer Container - Validate Template
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -19,4 +19,6 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - run: |
-        ls
+        cd packer
+        packer init nodeApi.pkr.hcl
+        packer validate -var-file=var.json nodeApi.pkr.hcl
