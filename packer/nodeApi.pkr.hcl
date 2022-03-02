@@ -43,7 +43,7 @@ variable "ssh_name" {
   sensitive = true
 }
 
-variable "ami_users" {
+variable "aws_demo_account_id" {
   type      = string
   default   = ""
   sensitive = true
@@ -65,7 +65,7 @@ source "amazon-ebs" "nodeApi" {
   region        = "${var.aws_region}"
   instance_type = "${var.instance_type}"
   subnet_id     = "${var.subnet_id}"
-  ami_users     = "${var.ami_users}"
+  ami_users     = ["${var.aws_demo_account_id}"]
   source_ami_filter {
     filters = {
       name                = "amzn2-ami-hvm-2.*.1-x86_64-gp2"
