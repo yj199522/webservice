@@ -38,7 +38,7 @@ jobs:
         packer init nodeApi.pkr.hcl
         packer build \
          -var 'aws_access_key=${{secrets.AWS_ACCESS_KEY}}' \
-         -var 'aws_secret_key=${{secrets.AWS_SECRET_KEY}} \
+         -var 'aws_secret_key=${{secrets.AWS_SECRET_KEY}}' \
          -var 'aws_region=${{secrets.AWS_REGION}}' \
          -var 'subnet_id=${{secrets.SUBNET_ID}}' \
          -var-file=var.json nodeApi.pkr.hcl
@@ -48,7 +48,7 @@ jobs:
          cd packer
          packer build \
          -var 'aws_access_key=${{secrets.AWS_ACCESS_KEY}}' \
-         -var 'aws_secret_key=${{secrets.AWS_SECRET_KEY}} \
+         -var 'aws_secret_key=${{secrets.AWS_SECRET_KEY}}' \
          -var 'aws_region=${{secrets.AWS_REGION}}' \
          -var 'subnet_id=${{secrets.SUBNET_ID}}' \
          -var-file=var.json nodeApi.pkr.hcl
