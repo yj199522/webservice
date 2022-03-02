@@ -23,14 +23,17 @@ jobs:
         mkdir codedeploy_artifact
         zip -r nodeApi . -x ".git/*" ".github/*" "node_modules/*" "package-lock.json"
 
-    - name: Artifact File
-      run: |
-        pwd
-        ls
-    # - uses: actions/upload-artifact@v2
-    #   with:
-    #     name: my-artifact
-    #     path: path/to/artifact/world.txt
+    - name: Upload zip file in Artifact
+    - uses: actions/upload-artifact@v2
+      with:
+        name: nodeApi
+        path: './nodeApi.zip'
+    
+    - name: Upload packer folder in Artifact
+    - uses: actions/upload-artifact@v2
+      with:
+        name: packer
+        path: './packer'
 
   # validate:
   #   runs-on: ubuntu-latest
