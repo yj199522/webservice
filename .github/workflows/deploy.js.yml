@@ -21,11 +21,11 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: Unit Test
+      - name: Running Unit Test
         run: |
           npm i && npm test
 
-      - name: Build zip File
+      - name: Building Zip File
         run: |
           mkdir codedeploy_artifact
           zip -r nodeApi . -x ".git/*" ".github/*" "node_modules/*" "package-lock.json" "packer/*"
