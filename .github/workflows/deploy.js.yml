@@ -27,6 +27,7 @@ jobs:
       run: | 
         mkdir codedeploy_artifact
         zip -r build_artifact .
-        pwd
         mv build_artifact.zip codedeploy_artifact
+        pwd
         cd codedeploy_artifact
+        pwd
