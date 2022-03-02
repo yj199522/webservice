@@ -3,8 +3,8 @@ Description=nodeApi App
 After=cloud-final.service
 
 [Service]
-WorkingDirectory=/home/ec2-user/webservice-main
-ExecStart=/usr/bin/node /home/ec2-user/webservice-main/index.js
+WorkingDirectory=/home/ec2-user
+ExecStart=/usr/bin/node /home/ec2-user/index.js
 Restart=always
 RestartSec=10
 StandardOutput=syslog
