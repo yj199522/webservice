@@ -2,9 +2,9 @@
 ``Restful API - Node.js``
 
 ## About the project
-Created an node application to perform CRU operations using http request
+* Created an node application to perform CRU operations using http request, and continuous deployment to create EC2 instance using packer
 
-## How To Run
+## How To Run Node Application
 * Download Node.js from the official site
 * Clone the repository into your local machine using git clone command.
 * Install pgAdmin on your device and set username and password, and also create a database and table</li>
@@ -13,6 +13,13 @@ Created an node application to perform CRU operations using http request
 * Write command npm start to run the project locally
 * Write command npm test to start the unit test
 * Now run the apis using localhost/postman or any api library of choice
+## How To Run Packer
+* Download packer from the official site
+* Clone the repository into your local machine using git clone command.
+* Go to your packer folder using cd
+* Write command packer init [packer file name] to install any plugins
+* Write command packer validate -var-file=[variable file name] [packer file name] to validate packer file
+* Write command packer build -var-file=[variable file name] [packer file name] to build ami instance in aws account
   
 ## Project Structure
 * *api.js* : It has it's logic to create server http, routing system and the API services.
@@ -24,6 +31,13 @@ Created an node application to perform CRU operations using http request
 * *tests/helper.test.js* : Contains unit test for helper function test
 * *.github/workflows/eslint.js.yml*: Perform eslint test workflow
 * *.github/workflows/test.js.yml*: Perform unit test workflow
+* *.github/workflows/deploy.js.yml*: Perform continuous deployment workflow using packer
+* *.github/workflows/validatePacker.js.yml*: Perform validate packer workflow
+* *packer/app.sh*: Shell scripting to install and start node application service
+* *packer/postgres.sh*: Shell scripting to install and start postgresql service
+* *packer/var.json*: Contain parameter key and value of packer building file
+* *packer/nodeApi.service*: Perform micro service of maintain the working of node application
+* *packer/nodeApi.pkr.hcl*: Perform packer activity to build ec2 instances
   
 ## Teach Stack
 * NodeJs
@@ -31,6 +45,10 @@ Created an node application to perform CRU operations using http request
 * PostgreSQL
 * Jest
 * GitHub Action
+* Packer
+* Shell Script
+* Microservice
+* AWS
 
 ## Features
 * Rest Apis
@@ -38,6 +56,9 @@ Created an node application to perform CRU operations using http request
 * Password Encryption
 * Unit Testing
 * GitHub Workflow testing for before and after PR merge 
+* Microservice to maintain node and postgres application
+* Building EC2 instance using Packer
+* GitHub Workflow to test the packer and deploying the instance in both dev and demo account
 
 ## Endpoints
 * /healthz :
@@ -64,3 +85,4 @@ Created an node application to perform CRU operations using http request
 ## External Libraries
 * bycrypt
 * supertest
+* packer
