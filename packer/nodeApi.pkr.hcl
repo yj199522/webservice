@@ -67,6 +67,12 @@ variable "device_name" {
   sensitive = true
 }
 
+variable "device_volume" {
+  type      = string
+  default   = ""
+  sensitive = true
+}
+
 variable "device_volume_type" {
   type      = string
   default   = ""
@@ -94,13 +100,13 @@ source "amazon-ebs" "nodeApi" {
     owners      = ["amazon"]
   }
   launch_block_device_mappings {
-    delete_on_termination = true
+    delete_on_termination = "${var.device_delete_on_termination}"
     device_name           = "${var.device_name}"
-    volume_size           = 8
+    volume_size           = "${var.device_volume}"
     volume_type           = "${var.device_volume_type}"
   }
-  ssh_username    = " $ { var.ssh_name } "
-  ami_name        = " nodeApi-app- $ { local.timestamp } "
+  ssh_username    = "${var.ssh_name}"
+  ami_name        = " nodeApi-app- ${local.timestamp} "
   ami_description = " Amazon Linux AMI for CSYE 6225 "
 }
 
@@ -110,7 +116,7 @@ build {
   ]
 
   provisioner " file " {
-    source      = " $ { var.zip_file_path } "
+    source      = " ${var.zip_file_path} "
     destination = " / home / ec2-user / nodeApi.zip "
   }
 
