@@ -68,7 +68,7 @@ source "amazon-ebs" "nodeApi" {
   ami_users     = ["${var.demo_account_id}"]
   source_ami_filter {
     filters = {
-      name                = "amzn2-ami-hvm-2.*.1-x86_64-gp2"
+      name                = "Amazon Linux 2 AMI (HVM) - Kernel 5.10, SSD Volume Type"
       root-device-type    = "ebs"
       virtualization-type = "hvm"
     }
