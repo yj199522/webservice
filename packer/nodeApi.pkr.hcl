@@ -55,30 +55,6 @@ variable "zip_file_path" {
   sensitive = true
 }
 
-variable "device_delete_on_termination" {
-  type      = string
-  default   = ""
-  sensitive = true
-}
-
-variable "device_name" {
-  type      = string
-  default   = ""
-  sensitive = true
-}
-
-variable "device_volume" {
-  type      = string
-  default   = ""
-  sensitive = true
-}
-
-variable "device_volume_type" {
-  type      = string
-  default   = ""
-  sensitive = true
-}
-
 locals {
   timestamp = regex_replace(timestamp(), "[- TZ:]", "")
 }
@@ -100,36 +76,36 @@ source "amazon-ebs" "nodeApi" {
     owners      = ["amazon"]
   }
   launch_block_device_mappings {
-    delete_on_termination = "${var.device_delete_on_termination}"
-    device_name           = "${var.device_name}"
-    volume_size           = "${var.device_volume}"
-    volume_type           = "${var.device_volume_type}"
+    delete_on_termination = true
+    device_name           = "/dev/sdp"
+    volume_size           = 8
+    volume_type           = "gp2"
   }
   ssh_username    = "${var.ssh_name}"
-  ami_name        = " nodeApi-app- ${local.timestamp} "
-  ami_description = " Amazon Linux AMI for CSYE 6225 "
+  ami_name        = "nodeApi-app-${local.timestamp}"
+  ami_description = "Amazon Linux AMI for CSYE 6225"
 }
 
 build {
   sources = [
-    " source.amazon-ebs.nodeApi "
+    "source.amazon-ebs.nodeApi"
   ]
 
-  provisioner " file " {
-    source      = " ${var.zip_file_path} "
-    destination = " / home / ec2-user / nodeApi.zip "
+  provisioner "file" {
+    source      = "${var.zip_file_path}"
+    destination = "/home/ec2-user/nodeApi.zip"
   }
 
-  provisioner " file " {
-    source      = "./ nodeApi.service "
-    destination = " / tmp / nodeApi.service "
+  provisioner "file" {
+    source      = "./nodeApi.service"
+    destination = "/tmp/nodeApi.service"
   }
 
-  provisioner " shell " {
-    script = "./ postgres.sh "
+  provisioner "shell" {
+    script = "./postgres.sh"
   }
 
-  provisioner " shell " {
-    script = "./ app.sh "
+  provisioner "shell" {
+    script = "./app.sh"
   }
 }
