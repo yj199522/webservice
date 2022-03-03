@@ -94,7 +94,7 @@ source "amazon-ebs" "nodeApi" {
     owners      = ["amazon"]
   }
   launch_block_device_mappings {
-    delete_on_termination = "${var.device_delete_on_termination}" 
+    delete_on_termination = true
     device_name           = "${var.device_name}"
     volume_size           = 8
     volume_type           = "${var.device_volume_type}"
