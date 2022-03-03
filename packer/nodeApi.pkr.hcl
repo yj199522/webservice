@@ -55,6 +55,30 @@ variable "zip_file_path" {
   sensitive = true
 }
 
+variable "device_delete_on_termination" {
+  type      = string
+  default   = ""
+  sensitive = true
+}
+
+variable "device_name" {
+  type      = string
+  default   = ""
+  sensitive = true
+}
+
+variable "device_volume" {
+  type      = string
+  default   = ""
+  sensitive = true
+}
+
+variable "device_volume_type" {
+  type      = string
+  default   = ""
+  sensitive = true
+}
+
 locals {
   timestamp = regex_replace(timestamp(), "[- TZ:]", "")
 }
@@ -76,10 +100,10 @@ source "amazon-ebs" "nodeApi" {
     owners      = ["amazon"]
   }
   launch_block_device_mappings {
-    delete_on_termination = true
-    device_name           = "/dev/sdp"
-    volume_size           = 8
-    volume_type           = "gp2"
+    delete_on_termination = "${var.device_delete_on_termination}"
+    device_name           = "${var.device_name}"
+    volume_size           = "${var.device_volume}"
+    volume_type           = "${var.device_volume_type}"
   }
   ssh_username    = "${var.ssh_name}"
   ami_name        = "nodeApi-app-${local.timestamp}"
