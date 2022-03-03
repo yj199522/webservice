@@ -6,5 +6,9 @@
     "instance_type": "t2.micro",
     "ssh_name": "ec2-user",
     "demo_account_id": "262304150223",
-    "zip_file_path": ""
+    "zip_file_path": "",
+    "device_delete_on_termination": "true",
+    "device_name": "/dev/sdp",
+    "device_volume": "8",
+    "device_volume_type": "gp2"
 }
