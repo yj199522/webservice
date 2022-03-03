@@ -9,6 +9,5 @@
     "zip_file_path": "",
     "device_delete_on_termination": "true",
     "device_name": "/dev/sdp",
-    "device_volume": "8",
     "device_volume_type": "gp2"
 }

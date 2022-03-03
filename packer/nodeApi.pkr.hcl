@@ -67,12 +67,6 @@ variable "device_name" {
   sensitive = true
 }
 
-variable "device_volume" {
-  type      = string
-  default   = ""
-  sensitive = true
-}
-
 variable "device_volume_type" {
   type      = string
   default   = ""
@@ -102,7 +96,7 @@ source "amazon-ebs" "nodeApi" {
   launch_block_device_mappings {
     delete_on_termination = "${var.device_delete_on_termination}" 
     device_name           = "${var.device_name}"
-    volume_size           = "${var.device_volume}"
+    volume_size           = 8
     volume_type           = "${var.device_volume_type}"
   }
   ssh_username    = " $ { var.ssh_name } "
