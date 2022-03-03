@@ -72,6 +72,12 @@ source "amazon-ebs" "nodeApi" {
       root-device-type    = "ebs"
       virtualization-type = "hvm"
     }
+    launch_block_device_mappings {
+      delete_on_termination = true
+      device_name           = "/dev/sdp"
+      volume_size           = 8
+      volume_type           = "gp2"
+    }
     most_recent = true
     owners      = ["amazon"]
   }
