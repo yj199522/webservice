@@ -6,6 +6,5 @@
     "instance_type": "t2.micro",
     "ssh_name": "ec2-user",
     "demo_account_id": "262304150223",
-    "dev_account_id": "931488132079",
     "zip_file_path": ""
 }
