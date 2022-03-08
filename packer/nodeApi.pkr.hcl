@@ -7,7 +7,7 @@ packer {
   }
 }
 
-variable "aws_access_keys" {
+variable "aws_access_key" {
   type      = string
   default   = ""
   sensitive = true
