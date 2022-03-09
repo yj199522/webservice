@@ -125,9 +125,9 @@ build {
     destination = "/tmp/nodeApi.service"
   }
 
-  provisioner "shell" {
-    script = "./postgres.sh"
-  }
+  // provisioner "shell" {
+  //   script = "./postgres.sh"
+  // }
 
   provisioner "shell" {
     script = "./app.sh"

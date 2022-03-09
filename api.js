@@ -3,7 +3,10 @@ const app = express();
 const {
     createUser,
     updateUser,
-    viewUser
+    viewUser,
+    uploadImg,
+    getImageData,
+    deleteImg
 } = require("./controllers");
 
 
@@ -17,6 +20,10 @@ app.use(express.json());
 app.post("/v1/user", createUser);
 app.put("/v1/user/self", updateUser);
 app.get("/v1/user/self", viewUser);
+app.get("/v1/user/self", viewUser);
+app.post("/v1/user/self/pic", uploadImg);
+app.get("/v1/user/self/pic", getImageData);
+app.delete("/v1/user/self/pic", deleteImg);
 app.get("/healthz", (req, res) => {
     try {
         res.status(200).json("server responds with 200 OK if it is healhty.")
