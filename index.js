@@ -14,4 +14,8 @@ pool.connect((err) => {
         function (error, result) {
             console.log(result);
         });
+    pool.query('create table if not exists public.photos(id UUID NOT NULL,user_id UUID NOT NULL,file_name VARCHAR(100),url text,upload_date Date,path VARCHAR(255), PRIMARY KEY (id), CONSTRAINT fk_users FOREIGN KEY(user_id) REFERENCES users(id));',
+        function (error, result) {
+            console.log(result);
+        });
 });

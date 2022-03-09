@@ -1,4 +1,7 @@
 const bcrypt = require("bcrypt");
+const {
+    Buffer
+} = require('buffer');
 
 const validateEmail = (email) => {
     const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -27,9 +30,16 @@ const comparePassword = async (hashPassword, password) => {
     return await bcrypt.compare(password, hashPassword);
 }
 
+const getImage = (base64) => {
+    const converted = base64.replace(/^data:image\/\w+;base64,/, '');
+    const extension = base64.match(/[^:]\w+\/[\w-+\d.]+(?=;|,)/)[0].split('/')
+    return [Buffer.from(converted, 'base64'), extension]
+};
+
 module.exports = {
     validateEmail,
     generatePasswordHash,
     basicAuth,
-    comparePassword
+    comparePassword,
+    getImage
 };
