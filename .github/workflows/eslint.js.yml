@@ -19,8 +19,6 @@ jobs:
           node-version: ${{ matrix.node-version }}
 
       - name: Running Eslint Checker
-        uses: sibiraj-s/action-eslint@v2
-        with:
-          eslint-args: '--ignore-path=.gitignore --quiet'
-          extensions: 'js,jsx,ts,tsx'
-          annotations: true
+        run: |
+          npm i
+          npm lint
