@@ -21,4 +21,4 @@ npm i
 sleep 15
 sudo mv /tmp/nodeApi.service /etc/systemd/system/nodeApi.service
 sudo systemctl enable nodeApi.service
-sudo systemctl start nodeApi.service
+# sudo systemctl start nodeApi.service
