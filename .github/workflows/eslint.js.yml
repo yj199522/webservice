@@ -21,4 +21,4 @@ jobs:
       - name: Running Eslint Checker
         run: |
           npm i
-          npm lint
+          npm run lint
