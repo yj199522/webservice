@@ -52,12 +52,18 @@ const uploadImg = (req, res) => {
 }
 
 const uploadImgData = (req, res, user_id) => {
+    if(!req.files) return res.status(400).json("No data is provided");
+    if(!req.files.fileName || !req.files.fileName.name) return res.status(400).json("Incorrect data format");
     const {
-        fileName:{
+        fileName: {
             name: file_name,
             data: img
         }
     } = req.files;
+    const fileType = ['png', 'jpg', 'jpeg'];
+    if (!fileType.includes(file_name.split('.')[1])) {
+        return res.status(400).json("Only .png, .jpg, or .jpeg is required");
+    }
     let values = [user_id];
     let queries = "Select path from photos where user_id = $1"
     pool.query(queries, values)
