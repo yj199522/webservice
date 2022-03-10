@@ -2,8 +2,7 @@ const pool = require("../db");
 
 const {
     basicAuth,
-    comparePassword,
-    getImage
+    comparePassword
 } = require("../utils/helper");
 
 const {
@@ -54,12 +53,12 @@ const uploadImg = (req, res) => {
 
 const uploadImgData = (req, res, user_id) => {
     const {
-        profilePic: {
-            contents
+        fileName:{
+            name: file_name,
+            data: img
         }
-    } = req.body;
+    } = req.files;
     let values = [user_id];
-    const [img, file] = getImage(contents);
     let queries = "Select path from photos where user_id = $1"
     pool.query(queries, values)
         .then(result => {
@@ -78,7 +77,6 @@ const uploadImgData = (req, res, user_id) => {
             }
         })
     let upload_date = new Date().toISOString().slice(0, 10);
-    const file_name = file[0] + "." + file[1];
     let imgData = `images/${user_id}/` + file_name;
     const params = {
         Bucket: bucketName,

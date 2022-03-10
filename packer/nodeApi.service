@@ -3,6 +3,7 @@ Description=nodeApi App
 After=cloud-final.service
 
 [Service]
+EnvironmentFile=/etc/environment
 WorkingDirectory=/home/ec2-user
 ExecStart=/usr/bin/node /home/ec2-user/index.js
 Restart=always
