@@ -16,8 +16,9 @@ yum erase codedeploy-agent -y
 
 sleep 15
 cd /home/ec2-user
+pwd
 wget https://webappcodedeploy.s3.us-east-1.amazonaws.com/latest/install
-chmod +x ./install
+sudo chmod +x ./install
 sudo ./install auto
 
 sleep 15
