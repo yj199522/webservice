@@ -5,11 +5,13 @@ name: AMI Main Deploy
 
 on:
   push:
+  pull_request:
     branches:
       - main
 
 jobs:
   packer_build:
+    name: AMI Build
     runs-on: ubuntu-latest
     env:
       ARTIFACT_NAME: csye6225-webapp-${{ github.run_number }}.zip
