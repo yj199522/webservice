@@ -34,7 +34,8 @@
 * *tests/helper.test.js* : Contains unit test for helper function test
 * *.github/workflows/eslint.js.yml*: Perform eslint test workflow
 * *.github/workflows/test.js.yml*: Perform unit test workflow
-* *.github/workflows/deploy.js.yml*: Perform continuous deployment workflow using packer
+* *.github/workflows/deploy.js.yml*: Perform continuous deployment workflow using codeDeploy Agent
+* *.github/workflows/amiBuild.js.yml*: Perform AMI build in AWS account
 * *.github/workflows/validatePacker.js.yml*: Perform validate packer workflow
 * *snellScript/app.sh*: Shell scripting to install and start node application service
 * *snellScript/postgres.sh*: Shell scripting to install and start PostgreSQL service
