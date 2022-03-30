@@ -28,7 +28,7 @@ app.get("/v1/user/self/pic", getImageData);
 app.delete("/v1/user/self/pic", deleteImg);
 app.get("/healthz", (req, res) => {
     try {
-        res.status(200).json("OK")
+        res.status(200).json("OK1")
     } catch (err) {
         res.json(err.message);
     }
