@@ -121,7 +121,7 @@ build {
   }
 
   provisioner "file" {
-    source      = "./nodeApi.service"
+    source      = "../snellScript/nodeApi.service"
     destination = "/tmp/nodeApi.service"
   }
 
