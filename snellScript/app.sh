@@ -21,7 +21,7 @@ cd webservice
 sudo unzip nodeApi.zip
 
 sleep 15
-npm i
+sudo npm i
 
 sleep 15
 sudo mv /tmp/nodeApi.service /etc/systemd/system/nodeApi.service
