@@ -27,56 +27,56 @@ jobs:
         run: |
           npm i && npm test
 
-      - name: Building Zip File
-        run: |
-          mkdir codedeploy_artifact
-          zip -r nodeApi . -x ".git/*" ".github/*" "node_modules/*" "package-lock.json" "packer/*"
-          mv nodeApi.zip codedeploy_artifact
-
-      - name: Run Packer Container - Validate Template
-        run: |
-          cd packer
-          packer init nodeApi.pkr.hcl
-          packer validate -var-file=var.json nodeApi.pkr.hcl
-
-      - name: Run Packer Container - Building Packer Template
-        env:
-          AWS_ACCESS_KEY: ${{secrets.AWS_ACCESS_KEY}}
-          AWS_SECRET_KEY: ${{secrets.AWS_SECRET_KEY}}
-          AWS_REGION: ${{secrets.AWS_REGION}}
-          SUBNET_ID: ${{secrets.SUBNET_ID}}
-        run: |
-          cd packer
-          packer build \
-          -var "zip_file_path=/home/runner/work/webservice/webservice/codedeploy_artifact/nodeApi.zip" \
-          -var-file=var.json nodeApi.pkr.hcl
-
       # - name: Building Zip File
       #   run: |
       #     mkdir codedeploy_artifact
-      #     zip -r ${{env.ARTIFACT_NAME}} . -x ".git/*" ".github/*" "node_modules/*" "package-lock.json" "packer/*"
-      #     mv ${{env.ARTIFACT_NAME}} codedeploy_artifact
+      #     zip -r nodeApi . -x ".git/*" ".github/*" "node_modules/*" "package-lock.json" "packer/*"
+      #     mv nodeApi.zip codedeploy_artifact
 
-      # - name: Configure AWS credentials from Test account
-      #   uses: aws-actions/configure-aws-credentials@v1
-      #   with:
-      #     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
-      #     aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
-      #     aws-region: ${{secrets.AWS_REGION}}
-      # - name: Push artifact to s3
+      # - name: Run Packer Container - Validate Template
       #   run: |
-      #     echo ${{secrets.S3_CODEDEPLOY_BUCKET}}
-      #     aws s3 sync ./codedeploy_artifact s3://${{secrets.S3_CODEDEPLOY_BUCKET}}
+      #     cd packer
+      #     packer init nodeApi.pkr.hcl
+      #     packer validate -var-file=var.json nodeApi.pkr.hcl
 
-      # - name: CodeDeploy API call
+      # - name: Run Packer Container - Building Packer Template
+      #   env:
+      #     AWS_ACCESS_KEY: ${{secrets.AWS_ACCESS_KEY}}
+      #     AWS_SECRET_KEY: ${{secrets.AWS_SECRET_KEY}}
+      #     AWS_REGION: ${{secrets.AWS_REGION}}
+      #     SUBNET_ID: ${{secrets.SUBNET_ID}}
       #   run: |
-      #     output=$(aws deploy create-deployment \
-      #     --application-name csye6225-webapp \
-      #     --deployment-config-name CodeDeployDefault.AllAtOnce \
-      #     --deployment-group-name csye6225-webapp-deployment \
-      #     --description "CSYE6255 - CodeDeploy" \
-      #     --s3-location bucket=${{secrets.S3_CODEDEPLOY_BUCKET}},key=build_artifact.zip,bundleType=zip \
-      #     --region ${{secrets.AWS_REGION}} \
-      #     --output json)
-      #     depId=$(echo $output | jq -r '.deploymentId')
-      #     aws deploy wait deployment-successful --deployment-id $depId
+      #     cd packer
+      #     packer build \
+      #     -var "zip_file_path=/home/runner/work/webservice/webservice/codedeploy_artifact/nodeApi.zip" \
+      #     -var-file=var.json nodeApi.pkr.hcl
+
+      - name: Building Zip File
+        run: |
+          mkdir codedeploy_artifact
+          zip -r ${{env.ARTIFACT_NAME}} . -x ".git/*" ".github/*" "node_modules/*" "package-lock.json" "packer/*"
+          mv ${{env.ARTIFACT_NAME}} codedeploy_artifact
+
+      - name: Configure AWS credentials from Test account
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
+          aws-region: ${{secrets.AWS_REGION}}
+      - name: Push artifact to s3
+        run: |
+          echo ${{secrets.S3_CODEDEPLOY_BUCKET}}
+          aws s3 sync ./codedeploy_artifact s3://${{secrets.S3_CODEDEPLOY_BUCKET}}
+
+      - name: CodeDeploy API call
+        run: |
+          output=$(aws deploy create-deployment \
+          --application-name csye6225-webapp \
+          --deployment-config-name CodeDeployDefault.AllAtOnce \
+          --deployment-group-name csye6225-webapp-deployment \
+          --description "CSYE6255 - CodeDeploy" \
+          --s3-location bucket=${{secrets.S3_CODEDEPLOY_BUCKET}},key=build_artifact.zip,bundleType=zip \
+          --region ${{secrets.AWS_REGION}} \
+          --output json)
+          depId=$(echo $output | jq -r '.deploymentId')
+          aws deploy wait deployment-successful --deployment-id $depId
