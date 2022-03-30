@@ -1,4 +1,4 @@
 cd /home/ec2-user/webservice
 pwd
-sudo chmod +x webservice
+sudo chown ec2-user: webservice
 npm install

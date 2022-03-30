@@ -16,7 +16,7 @@ sudo yum install unzip -y
 cd /home/ec2-user
 sudo mkdir webservice
 sudo mv /home/ec2-user/nodeApi.zip /home/ec2-user/webservice/nodeApi.zip
-sudo chmod +x webservice
+sudo chown ec2-user: webservice
 cd webservice
 sudo unzip nodeApi.zip
 
