@@ -1,7 +1,7 @@
 # This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
 
-name: AMI Main Deploy
+name: Code Deploy
 
 on:
   push:
@@ -9,10 +9,11 @@ on:
       - main
 
 jobs:
-  packer_build:
+  build:
+    name: Code Deploy Build
     runs-on: ubuntu-latest
     env:
-      ARTIFACT_NAME: csye6225-webapp-${{ github.run_number }}.zip
+      ARTIFACT_NAME: csye6225-webapp-${{ github.sha }}.zip
     steps:
       - uses: actions/checkout@v2
 
@@ -31,43 +32,26 @@ jobs:
           zip -r ${{env.ARTIFACT_NAME}} . -x ".git/*" ".github/*" "node_modules/*" "package-lock.json" "packer/*"
           mv ${{env.ARTIFACT_NAME}} codedeploy_artifact
 
-      - name: Run Packer Container - Validate Template
+      - name: Configure AWS credentials from Test account
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
+          aws-region: ${{secrets.AWS_REGION}}
+      - name: Push artifact to s3
         run: |
-          cd packer
-          packer init nodeApi.pkr.hcl
-          packer validate -var-file=var.json nodeApi.pkr.hcl
+          echo ${{secrets.S3_CODEDEPLOY_BUCKET}}
+          aws s3 sync ./codedeploy_artifact s3://${{secrets.S3_CODEDEPLOY_BUCKET}}
 
-      - name: Run Packer Container - Building Packer Template
-        env:
-          AWS_ACCESS_KEY: ${{secrets.AWS_ACCESS_KEY}}
-          AWS_SECRET_KEY: ${{secrets.AWS_SECRET_KEY}}
-          AWS_REGION: ${{secrets.AWS_REGION}}
-          SUBNET_ID: ${{secrets.SUBNET_ID}}
+      - name: CodeDeploy API call
         run: |
-          cd packer
-          packer build \
-          -var-file=var.json nodeApi.pkr.hcl
-
-      # - name: Configure AWS credentials from Test account
-      #   uses: aws-actions/configure-aws-credentials@v1
-      #   with:
-      #     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
-      #     aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
-      #     aws-region: ${{secrets.AWS_REGION}}
-      # - name: Push artifact to s3
-      #   run: |
-      #     aws s3 sync ./codedeploy_artifact s3://${{secrets.S3_CODEDEPLOY_BUCKET}}
-      #     echo ${{secrets.S3_CODEDEPLOY_BUCKET}}
-
-      # - name: CodeDeploy API call
-      #   run: |
-      #     output=$(aws deploy create-deployment \
-      #     --application-name csye6225-webapp \
-      #     --deployment-config-name CodeDeployDefault.AllAtOnce \
-      #     --deployment-group-name csye6225-webapp-deployment \
-      #     --description "CSYE6255 - CodeDeploy" \
-      #     --s3-location bucket=${{secrets.S3_CODEDEPLOY_BUCKET}},key=build_artifact.zip,bundleType=zip \
-      #     --region ${{secrets.AWS_REGION}} \
-      #     --output json)
-      #     depId=$(echo $output | jq -r '.deploymentId')
-      #     aws deploy wait deployment-successful --deployment-id $depId
+          output=$(aws deploy create-deployment \
+          --application-name csye6225-webapp \
+          --deployment-config-name CodeDeployDefault.AllAtOnce \
+          --deployment-group-name csye6225-webapp-deployment \
+          --description "CSYE6255 - CodeDeploy" \
+          --s3-location bucket=${{secrets.S3_CODEDEPLOY_BUCKET}},key=${{env.ARTIFACT_NAME}},bundleType=zip \
+          --region ${{secrets.AWS_REGION}} \
+          --output json)
+          depId=$(echo $output | jq -r '.deploymentId')
+          aws deploy wait deployment-successful --deployment-id $depId

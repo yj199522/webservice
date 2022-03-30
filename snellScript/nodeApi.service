@@ -4,8 +4,8 @@ After=cloud-final.service
 
 [Service]
 EnvironmentFile=/etc/environment
-WorkingDirectory=/home/ec2-user
-ExecStart=/usr/bin/node /home/ec2-user/index.js
+WorkingDirectory=/home/ec2-user/webservice
+ExecStart=/usr/bin/node /home/ec2-user/webservice/index.js
 Restart=always
 RestartSec=10
 StandardOutput=syslog
