@@ -14,10 +14,12 @@ sudo yum install -y nodejs
 sleep 15
 sudo yum install unzip -y
 cd /home/ec2-user
+ls
 sudo mkdir webservice
+ls
 sudo mv /home/ec2-user/nodeApi.zip /home/ec2-user/webservice/nodeApi.zip
-pwd
 cd webservice
+ls
 unzip nodeApi.zip
 
 sleep 15
