@@ -1,17 +1,16 @@
 # This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
 
-name: AMI Main Deploy
+name: Code Deploy
 
 on:
   push:
-  pull_request:
     branches:
       - main
 
 jobs:
-  packer_build:
-    name: AMI Build
+  build:
+    name: Code Deploy Build
     runs-on: ubuntu-latest
     env:
       ARTIFACT_NAME: csye6225-webapp-${{ github.sha }}.zip
@@ -26,30 +25,6 @@ jobs:
       - name: Running Unit Test
         run: |
           npm i && npm test
-
-      # - name: Building Zip File
-      #   run: |
-      #     mkdir codedeploy_artifact
-      #     zip -r nodeApi . -x ".git/*" ".github/*" "node_modules/*" "package-lock.json" "packer/*"
-      #     mv nodeApi.zip codedeploy_artifact
-
-      # - name: Run Packer Container - Validate Template
-      #   run: |
-      #     cd packer
-      #     packer init nodeApi.pkr.hcl
-      #     packer validate -var-file=var.json nodeApi.pkr.hcl
-
-      # - name: Run Packer Container - Building Packer Template
-      #   env:
-      #     AWS_ACCESS_KEY: ${{secrets.AWS_ACCESS_KEY}}
-      #     AWS_SECRET_KEY: ${{secrets.AWS_SECRET_KEY}}
-      #     AWS_REGION: ${{secrets.AWS_REGION}}
-      #     SUBNET_ID: ${{secrets.SUBNET_ID}}
-      #   run: |
-      #     cd packer
-      #     packer build \
-      #     -var "zip_file_path=/home/runner/work/webservice/webservice/codedeploy_artifact/nodeApi.zip" \
-      #     -var-file=var.json nodeApi.pkr.hcl
 
       - name: Building Zip File
         run: |
