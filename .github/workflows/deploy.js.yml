@@ -30,8 +30,8 @@ jobs:
       - name: Building Zip File
         run: |
           mkdir codedeploy_artifact
-          zip -r ${{env.ARTIFACT_NAME}} . -x ".git/*" ".github/*" "node_modules/*" "package-lock.json" "packer/*"
-          mv ${{env.ARTIFACT_NAME}} codedeploy_artifact
+          zip -r nodeApi . -x ".git/*" ".github/*" "node_modules/*" "package-lock.json" "packer/*"
+          mv nodeApi.zip codedeploy_artifact
 
       - name: Run Packer Container - Validate Template
         run: |
@@ -48,7 +48,14 @@ jobs:
         run: |
           cd packer
           packer build \
+          -var "zip_file_path=/home/runner/work/webservice/webservice/codedeploy_artifact/nodeApi.zip" \
           -var-file=var.json nodeApi.pkr.hcl
+
+      # - name: Building Zip File
+      #   run: |
+      #     mkdir codedeploy_artifact
+      #     zip -r ${{env.ARTIFACT_NAME}} . -x ".git/*" ".github/*" "node_modules/*" "package-lock.json" "packer/*"
+      #     mv ${{env.ARTIFACT_NAME}} codedeploy_artifact
 
       # - name: Configure AWS credentials from Test account
       #   uses: aws-actions/configure-aws-credentials@v1

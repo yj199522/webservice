@@ -49,11 +49,11 @@ variable "demo_account_id" {
   sensitive = true
 }
 
-// variable "zip_file_path" {
-//   type      = string
-//   default   = ""
-//   sensitive = true
-// }
+variable "zip_file_path" {
+  type      = string
+  default   = ""
+  sensitive = true
+}
 
 variable "device_delete_on_termination" {
   type      = string
@@ -115,21 +115,21 @@ build {
     "source.amazon-ebs.nodeApi"
   ]
 
-  // provisioner "file" {
-  //   source      = "${var.zip_file_path}"
-  //   destination = "/home/ec2-user/nodeApi.zip"
-  // }
+  provisioner "file" {
+    source      = "${var.zip_file_path}"
+    destination = "/home/ec2-user/webservice/nodeApi.zip"
+  }
 
-  // provisioner "file" {
-  //   source      = "./nodeApi.service"
-  //   destination = "/tmp/nodeApi.service"
-  // }
-
-  provisioner "shell" {
-    script = "./app.sh"
+  provisioner "file" {
+    source      = "./nodeApi.service"
+    destination = "/tmp/nodeApi.service"
   }
 
   provisioner "shell" {
-    script = "./codeDeploy.sh"
+    script = "../snellScript/app.sh"
+  }
+
+  provisioner "shell" {
+    script = "../snellScript/codeDeploy.sh"
   }
 }
