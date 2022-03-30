@@ -21,9 +21,11 @@ cd webservice
 sudo unzip nodeApi.zip
 
 sleep 15
-sudo npm i
+sudo npm cache clean -f
+sudo npm install -g n
+sudo n stable
+sudo npm install --unsafe-perm=true --allow-root 
 
 sleep 15
 sudo mv /tmp/nodeApi.service /etc/systemd/system/nodeApi.service
 sudo systemctl enable nodeApi.service
-# sudo systemctl start nodeApi.service
