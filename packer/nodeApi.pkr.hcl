@@ -117,7 +117,7 @@ build {
 
   provisioner "file" {
     source      = "${var.zip_file_path}"
-    destination = "/home/ec2-user/webservice/nodeApi.zip"
+    destination = "/home/ec2-user/nodeApi.zip"
   }
 
   provisioner "file" {
