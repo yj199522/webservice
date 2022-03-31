@@ -19,7 +19,7 @@ app.use(cors());
 app.use(express.json());
 
 //Routes
-app.post("/v2/user", createUser);
+app.post("/v1/user", createUser);
 app.put("/v1/user/self", updateUser);
 app.get("/v1/user/self", viewUser);
 app.get("/v1/user/self", viewUser);
