@@ -8,9 +8,8 @@ WorkingDirectory=/home/ec2-user/webservice
 ExecStart=/usr/bin/node /home/ec2-user/webservice/index.js
 Restart=always
 RestartSec=10
-StandardOutput=syslog
-StandardError=syslog
-SyslogIdentifier=nodeApi-app
+StandardOutput=null
+StandardError=null
 User=ec2-user
 
 [Install]

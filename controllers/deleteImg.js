@@ -21,7 +21,7 @@ const logger = require('../logger');
 
 const deleteImg = (req, res) => {
     const [username, password] = basicAuth(req);
-    sdc.increment('endpoint.user.post');
+    sdc.increment('endpoint.user.delete - deleteImg');
     if (!username || !password) {
         logger.error("Forbidden Request");
         return res.status(403).json("Forbidden Request");

@@ -30,7 +30,7 @@ app.post("/v1/user/self/pic", uploadImg);
 app.get("/v1/user/self/pic", getImageData);
 app.delete("/v1/user/self/pic", deleteImg);
 app.get("/healthz", (req, res) => {
-    sdc.increment('endpoint.user.post');
+    sdc.increment('endpoint.user.get - healthz');
     try {
         logger.info("server responds with 200 OK if it is healhty.");
         res.status(200).json("server responds with 200 OK if it is healhty.");
@@ -40,6 +40,13 @@ app.get("/healthz", (req, res) => {
     }
 });
 app.get('*', function (req, res) {
+    sdc.increment('endpoint.user.get - wrong api');
+    logger.error("Page not found!");
+    res.status(404).json("Page not found!")
+});
+
+app.post('*', function (req, res) {
+    sdc.increment('endpoint.user.post - wrong api');
     logger.error("Page not found!");
     res.status(404).json("Page not found!")
 });

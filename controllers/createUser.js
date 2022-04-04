@@ -17,7 +17,7 @@ const logger = require('../logger');
 const createUser = (req, res) => {
     const fieldNeeded = ["first_name", "last_name", "username", "password", "account_created", "account_updated"];
     const reqKey = req.body ? Object.keys(req.body) : null;
-    sdc.increment('endpoint.user.post');
+    sdc.increment('endpoint.user.post - createUser');
     logger.info('Made user create api call');
     if (!reqKey || !reqKey.length) {
         logger.error('No information is provided to create a user');

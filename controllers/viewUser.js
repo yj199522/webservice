@@ -12,7 +12,7 @@ const logger = require('../logger');
 
 const viewUser = (req, res) => {
     const [username, password] = basicAuth(req);
-    sdc.increment('endpoint.user.post');
+    sdc.increment('endpoint.user.get - viewUser');
     if (!username || !password) {
         logger.error("Forbidden Request");
         return res.status(403).json("Forbidden Request");
