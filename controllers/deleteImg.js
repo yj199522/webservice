@@ -6,18 +6,24 @@ const {
 } = require("../utils/helper");
 
 require("dotenv").config();
-var AWS = require("aws-sdk");
+
+const AWS = require("aws-sdk");
 const bucketName = process.env.S3_BUCKET;
 const region = process.env.AWS_REGION;
 const s3 = new AWS.S3({
     region
 });
 
+const StatsD = require('node-statsd');
+sdc = new StatsD();
+
+const logger = require('../logger');
 
 const deleteImg = (req, res) => {
     const [username, password] = basicAuth(req);
-
+    sdc.increment('endpoint.user.post');
     if (!username || !password) {
+        logger.error("Forbidden Request");
         return res.status(403).json("Forbidden Request");
     }
 
@@ -36,14 +42,17 @@ const deleteImg = (req, res) => {
                         if (compareValue) {
                             deleteImgData(res, id);
                         } else {
+                            logger.error("Incorrect Password");
                             return res.status(401).json("Incorrect Password");
                         }
                     })
             } else {
+                logger.error("Username Incorrect");
                 return res.status(401).json("Username Incorrect");
             }
         })
         .catch(err => {
+            logger.error(err.message);
             return res.status(400).json(err.message)
         })
 }
@@ -64,11 +73,13 @@ const deleteImgData = (res, user_id) => {
                         queries = "DELETE FROM photos WHERE user_id = $1"
                         pool.query(queries, values)
                             .then(results => {
+                                logger.info("Image Deleted Successfully for user_id: " + user_id);
                                 return res.status(204).json(results.rows[0]);
                             })
                     }
                 })
             } else {
+                logger.error("Image not found");
                 return res.status(404).json("Image not found");
             }
         })

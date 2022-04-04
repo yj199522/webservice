@@ -5,10 +5,16 @@ const {
     comparePassword
 } = require("../utils/helper");
 
+const StatsD = require('node-statsd');
+sdc = new StatsD();
+
+const logger = require('../logger');
+
 const getImageData = (req, res) => {
     const [username, password] = basicAuth(req);
-
+    sdc.increment('endpoint.user.post');
     if (!username || !password) {
+        logger.error("Forbidden Request");
         return res.status(403).json("Forbidden Request");
     }
 
@@ -27,14 +33,17 @@ const getImageData = (req, res) => {
                         if (compareValue) {
                             getImgData(req, res, id);
                         } else {
+                            logger.error("Incorrect Password");
                             return res.status(401).json("Incorrect Password");
                         }
                     })
             } else {
+                logger.error("Username Incorrect");
                 return res.status(401).json("Username Incorrect");
             }
         })
         .catch(err => {
+            logger.error(err.message);
             return res.status(400).json(err.message)
         })
 }
@@ -45,9 +54,11 @@ const getImgData = (req, res, user_id) => {
     pool.query(queries, values)
         .then(result => {
             if (!result.rowCount) {
+                logger.error("Image not found");
                 return res.status(404).json("Image not found");
             } else {
                 result.rows[0].upload_date = new Date(result.rows[0].upload_date).toISOString().slice(0, 10)
+                logger.error("Image details display for user_id: " + user_id);
                 return res.status(200).json(result.rows[0]);
             }
         })

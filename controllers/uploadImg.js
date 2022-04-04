@@ -10,17 +10,24 @@ const {
 } = require("uuid");
 
 require("dotenv").config();
-var AWS = require("aws-sdk");
+const AWS = require("aws-sdk");
 const bucketName = process.env.S3_BUCKET;
 const region = process.env.AWS_REGION;
 const s3 = new AWS.S3({
     region
 });
 
+
+const StatsD = require('node-statsd');
+sdc = new StatsD();
+
+const logger = require('../logger');
+
 const uploadImg = (req, res) => {
     const [username, password] = basicAuth(req);
-
+    sdc.increment('endpoint.user.post');
     if (!username || !password) {
+        logger.error("Forbidden Request");
         return res.status(403).json("Forbidden Request");
     }
 
@@ -39,10 +46,12 @@ const uploadImg = (req, res) => {
                         if (compareValue) {
                             uploadImgData(req, res, id);
                         } else {
+                            logger.error("Incorrect Password");
                             return res.status(401).json("Incorrect Password");
                         }
                     })
             } else {
+                logger.error("Username Incorrect");
                 return res.status(401).json("Username Incorrect");
             }
         })
@@ -52,8 +61,14 @@ const uploadImg = (req, res) => {
 }
 
 const uploadImgData = (req, res, user_id) => {
-    if(!req.files) return res.status(400).json("No data is provided");
-    if(!req.files.fileName || !req.files.fileName.name) return res.status(400).json("Incorrect data format");
+    if (!req.files) {
+        logger.error("No data is provided");
+        return res.status(400).json("No data is provided");
+    }
+    if (!req.files.fileName || !req.files.fileName.name) {
+        logger.error("Incorrect data format");
+        return res.status(400).json("Incorrect data format");
+    }
     const {
         fileName: {
             name: file_name,
@@ -62,6 +77,7 @@ const uploadImgData = (req, res, user_id) => {
     } = req.files;
     const fileType = ['png', 'jpg', 'jpeg'];
     if (!fileType.includes(file_name.split('.')[1])) {
+        logger.error("Only .png, .jpg, or .jpeg is required");
         return res.status(400).json("Only .png, .jpg, or .jpeg is required");
     }
     let values = [user_id];
@@ -74,6 +90,7 @@ const uploadImgData = (req, res, user_id) => {
                     Key: result.rows[0].path
                 }, (err, data) => {
                     if (err) {
+                        logger.error("Error deleting data to database while creating photos");
                         return res.status(400).json("Error deleting data to database while creating photos");
                     } else {
                         queries = "DELETE FROM photos WHERE user_id = $1"
@@ -107,8 +124,10 @@ const uploadImgData = (req, res, user_id) => {
         values = [uuidv4(), user_id, file_name, Location, upload_date, Key];
         pool.query(queries, values, (err, result) => {
             if (err) {
+                logger.error("Error inserting data to database while creating photos");
                 return res.status(400).json("Error inserting data to database while creating photos");
             } else {
+                logger.info("Image Uploaded Successfully for user_id: " + user_id);
                 return res.status(201).json(result.rows[0]);
             }
         })
