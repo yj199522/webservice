@@ -2,7 +2,7 @@ const express = require('express');
 const fileUpload = require("express-fileupload");
 const app = express();
 const StatsD = require('statsd-client');
-sdc = new StatsD();
+sdc = new StatsD({host: 'localhost', port: 8125});
 const logger = require('./logger');
 app.use(fileUpload());
 const {

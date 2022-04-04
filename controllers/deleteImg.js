@@ -15,7 +15,7 @@ const s3 = new AWS.S3({
 });
 
 const StatsD = require('statsd-client');
-sdc = new StatsD();
+sdc = new StatsD({host: 'localhost', port: 8125});
 
 const logger = require('../logger');
 
