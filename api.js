@@ -1,7 +1,7 @@
 const express = require('express');
 const fileUpload = require("express-fileupload");
 const app = express();
-const StatsD = require('node-statsd');
+const StatsD = require('statsd-client');
 sdc = new StatsD();
 const logger = require('./logger');
 app.use(fileUpload());

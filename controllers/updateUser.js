@@ -6,7 +6,7 @@ const {
     comparePassword
 } = require("../utils/helper");
 
-const StatsD = require('node-statsd');
+const StatsD = require('statsd-client');
 sdc = new StatsD();
 
 const logger = require('../logger');

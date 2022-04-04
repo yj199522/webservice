@@ -14,7 +14,7 @@ const s3 = new AWS.S3({
     region
 });
 
-const StatsD = require('node-statsd');
+const StatsD = require('statsd-client');
 sdc = new StatsD();
 
 const logger = require('../logger');
