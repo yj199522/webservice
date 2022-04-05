@@ -29,3 +29,8 @@ sudo npm install --unsafe-perm=true --allow-root
 sleep 15
 sudo mv /tmp/nodeApi.service /etc/systemd/system/nodeApi.service
 sudo systemctl enable nodeApi.service
+sudo systemctl start nodeApi.service
+sudo systemctl status nodeApi.service
+sudo systemctl stop nodeApi.service
+sudo systemctl status nodeApi.service
+sudo chmod 777 /home/ec2-user/webservice/logs/app.log
