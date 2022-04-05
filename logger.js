@@ -2,12 +2,6 @@ var appRoot = require('app-root-path');
 var winston = require('winston');
 
 // define the custom settings for each transport (file, console)
-
-const customerFormat = winston.format.combine(winston.format.timestamp(), winston.format.printf((info) => {
-  return `${info.timestamp} - [${info.level.toUpperCase().padEnd(7)}] --> ${info.message}`
-
-}));
-
 var options = {
   file: {
     level: 'debug',
@@ -28,7 +22,7 @@ var options = {
 
 // instantiate a new Winston Logger with the settings defined above
 var logger = new winston.createLogger({
-  format: customerFormat,
+  level: 'debug',
   transports: [
     new winston.transports.File(options.file),
     new winston.transports.Console(options.console)
