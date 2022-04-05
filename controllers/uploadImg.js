@@ -44,7 +44,7 @@ const uploadImg = (req, res) => {
                 comparePassword(hashPassword, password)
                     .then(compareValue => {
                         if (compareValue) {
-                            uploadImgData(req, res, id);
+                            uploadImgData(req, res, id, username);
                         } else {
                             logger.error("Incorrect Password");
                             return res.status(401).json("Incorrect Password");
@@ -60,7 +60,7 @@ const uploadImg = (req, res) => {
         })
 }
 
-const uploadImgData = (req, res, user_id) => {
+const uploadImgData = (req, res, user_id, username) => {
     if (!req.files) {
         logger.error("No data is provided");
         return res.status(400).json("No data is provided");
@@ -93,6 +93,7 @@ const uploadImgData = (req, res, user_id) => {
                         logger.error("Error deleting data to database while creating photos");
                         return res.status(400).json("Error deleting data to database while creating photos");
                     } else {
+                        logger.info("Image Exiting Deleted Successfully for username: " + username);
                         queries = "DELETE FROM photos WHERE user_id = $1"
                         pool.query(queries, values);
                     }
@@ -127,7 +128,7 @@ const uploadImgData = (req, res, user_id) => {
                 logger.error("Error inserting data to database while creating photos");
                 return res.status(400).json("Error inserting data to database while creating photos");
             } else {
-                logger.info("Image Uploaded Successfully for user_id: " + user_id);
+                logger.info("Image Uploaded Successfully for username: " + username);
                 return res.status(201).json(result.rows[0]);
             }
         })

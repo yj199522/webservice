@@ -40,7 +40,7 @@ const deleteImg = (req, res) => {
                 comparePassword(hashPassword, password)
                     .then(compareValue => {
                         if (compareValue) {
-                            deleteImgData(res, id);
+                            deleteImgData(res, id, username);
                         } else {
                             logger.error("Incorrect Password");
                             return res.status(401).json("Incorrect Password");
@@ -57,7 +57,7 @@ const deleteImg = (req, res) => {
         })
 }
 
-const deleteImgData = (res, user_id) => {
+const deleteImgData = (res, user_id, username) => {
     let queries = "Select path from photos where user_id = $1";
     let values = [user_id];
     pool.query(queries, values)
@@ -73,7 +73,7 @@ const deleteImgData = (res, user_id) => {
                         queries = "DELETE FROM photos WHERE user_id = $1"
                         pool.query(queries, values)
                             .then(results => {
-                                logger.info("Image Deleted Successfully for user_id: " + user_id);
+                                logger.info("Image Deleted Successfully for username: " + username);
                                 return res.status(204).json(results.rows[0]);
                             })
                     }
