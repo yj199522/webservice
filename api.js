@@ -32,7 +32,7 @@ app.delete("/v1/user/self/pic", deleteImg);
 app.get("/healthz", (req, res) => {
     sdc.increment('endpoint.user.get - healthz');
     try {
-        logger.info("server responds with 200 OK if it is healhty.");
+        logger.info("healhty api");
         res.status(200).json("server responds with 200 OK if it is healhty.");
     } catch (err) {
         logger.info(err.message);
