@@ -1,5 +1,5 @@
 const app = require("./api");
-// const pool = require('./db');
+const pool = require('./db');
 const logger = require('./logger');
 
 
@@ -8,7 +8,6 @@ app.listen(2000, () => {
 })
 
 // connecting DataBase
-
 pool.connect((err) => {
     if (err) {
         logger.error(err.message);
