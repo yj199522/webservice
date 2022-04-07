@@ -6,10 +6,16 @@ const {
     comparePassword
 } = require("../utils/helper");
 
+const StatsD = require('statsd-client');
+sdc = new StatsD({host: 'localhost', port: 8125});
+
+const logger = require('../logger');
+
 const updateUser = (req, res) => {
     const [username, password] = basicAuth(req);
-
+    sdc.increment('endpoint.user.put - updateUser');
     if (!username || !password) {
+        logger.error("Forbidden Request");
         return res.status(403).json("Forbidden Request");
     }
 
@@ -27,14 +33,17 @@ const updateUser = (req, res) => {
                         if (compareValue) {
                             updateData(req, res, username);
                         } else {
+                            logger.error("Incorrect Password");
                             return res.status(401).json("Incorrect Password");
                         }
                     })
             } else {
+                logger.error("Username Password");
                 return res.status(401).json("Username Incorrect");
             }
         })
         .catch(err => {
+            logger.error(err.message);
             return res.status(400).json(err.message)
         })
 }
@@ -44,6 +53,7 @@ const updateData = (req, res, username) => {
     const reqKey = req.body ? Object.keys(req.body) : null;
 
     if (!reqKey || !reqKey.length) {
+        logger.error("No information is provided to update user");
         return res.status(400).json("No information is provided to update user");
     }
 
@@ -56,6 +66,7 @@ const updateData = (req, res, username) => {
     })
 
     if (!checking) {
+        logger.error("Only first_name, last_name, and password is required");
         return res.status(400).json("Only first_name, last_name, and password is required");
     }
 
@@ -66,6 +77,7 @@ const updateData = (req, res, username) => {
         password
     } = req.body;
     if ((password && password.length < 8) || (first_name && !first_name.length) || (last_name && !last_name.length)) {
+        logger.error("Incorrect data format");
         return res.status(400).json("Incorrect data format");
     }
 
@@ -88,11 +100,13 @@ const updatingQuery = (req, res, username, account_updated) => {
 
     const queries = `UPDATE users SET ${updates} where username = $${dKeys.length +  1}`;
     const values = [...Object.values(req.body), account_updated, username];
-    
+
     pool.query(queries, values, (err, result) => {
         if (err) {
+            logger.error("Error updating data to database while creating user");
             res.status(400).json("Error updating data to database while creating user");
         } else {
+            logger.info("User successfully updated for username: " + username);
             res.status(204).json(result.rows[0])
         }
     })

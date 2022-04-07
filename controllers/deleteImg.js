@@ -6,18 +6,24 @@ const {
 } = require("../utils/helper");
 
 require("dotenv").config();
-var AWS = require("aws-sdk");
+
+const AWS = require("aws-sdk");
 const bucketName = process.env.S3_BUCKET;
 const region = process.env.AWS_REGION;
 const s3 = new AWS.S3({
     region
 });
 
+const StatsD = require('statsd-client');
+sdc = new StatsD({host: 'localhost', port: 8125});
+
+const logger = require('../logger');
 
 const deleteImg = (req, res) => {
     const [username, password] = basicAuth(req);
-
+    sdc.increment('endpoint.user.delete - deleteImg');
     if (!username || !password) {
+        logger.error("Forbidden Request");
         return res.status(403).json("Forbidden Request");
     }
 
@@ -34,21 +40,24 @@ const deleteImg = (req, res) => {
                 comparePassword(hashPassword, password)
                     .then(compareValue => {
                         if (compareValue) {
-                            deleteImgData(res, id);
+                            deleteImgData(res, id, username);
                         } else {
+                            logger.error("Incorrect Password");
                             return res.status(401).json("Incorrect Password");
                         }
                     })
             } else {
+                logger.error("Username Incorrect");
                 return res.status(401).json("Username Incorrect");
             }
         })
         .catch(err => {
+            logger.error(err.message);
             return res.status(400).json(err.message)
         })
 }
 
-const deleteImgData = (res, user_id) => {
+const deleteImgData = (res, user_id, username) => {
     let queries = "Select path from photos where user_id = $1";
     let values = [user_id];
     pool.query(queries, values)
@@ -64,11 +73,13 @@ const deleteImgData = (res, user_id) => {
                         queries = "DELETE FROM photos WHERE user_id = $1"
                         pool.query(queries, values)
                             .then(results => {
+                                logger.info("Image Deleted Successfully for username: " + username);
                                 return res.status(204).json(results.rows[0]);
                             })
                     }
                 })
             } else {
+                logger.error("Image not found");
                 return res.status(404).json("Image not found");
             }
         })
