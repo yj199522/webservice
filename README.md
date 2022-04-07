@@ -2,7 +2,7 @@
 ``Restful API - Node.js``
 
 ## About the project
-* Created a node application to perform CRU operations using an HTTP request, and continuous deployment by uploading the most recent code base of the application in form of the zip file in S3 using this zip we will deploy the application using Codedeploy Agent
+* Created a node application to perform CRU operations using an HTTP request, and continuous deployment by uploading the most recent code base of the application in form of the zip file in S3 using this zip we will deploy the application using Codedeploy Agent. 
 
 ## How To Run Node Application
 * Download Node.js from the official site
@@ -47,6 +47,8 @@
 * *packer/var.json*: Contain parameter key and value of packer building file
 * *packer/nodeApi.pkr.hcl*: Perform packer activity to build ec2 instances
 * *appspec.yml*: Contain information about what step to be performed by the code deploy agent when launching
+* *logger.js*: Contain logger configuration of the application
+* *amazon-cloudwatch-agent.json*: Contain cloudWatch configuration
   
 ## Teach Stack
 * NodeJs
@@ -60,6 +62,7 @@
 * AWS
 * AWS S3
 * AWS CodeDeploy Agent
+* AWS CloudWatch Agent
 
 ## Features
 * Rest Apis
@@ -73,6 +76,7 @@
 * GitHub Workflow to test the packer and deploy the instance in both dev and demo accounts
 * Uploading the most recent code base of the application in the form of a zip file in AWS S3
 * Fetching the uploaded zip file from S3 to continuously deploying the application using Codedeploy Agent
+* Logging the application logs using Cloudwatch Agent
 
 ## Endpoints
 * /healthz :
@@ -119,3 +123,6 @@
 * aws-sdk
 * uuid
 * jest
+* winston
+* app-root-path
+* statsd-client
