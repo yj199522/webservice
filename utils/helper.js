@@ -1,4 +1,5 @@
 const bcrypt = require("bcrypt");
+const crypt = require('crypto');
 const {
     Buffer
 } = require('buffer');
@@ -36,10 +37,19 @@ const getImage = (base64) => {
     return [Buffer.from(converted, 'base64'), extension]
 };
 
+const generateAccessToken = (username) => {
+    
+    let SHA= crypt.createHash('sha256');
+    SHA.update(username);
+    let HASH = SHA.digest('hex');
+    return HASH;
+}
+
 module.exports = {
     validateEmail,
     generatePasswordHash,
     basicAuth,
     comparePassword,
-    getImage
+    getImage,
+    generateAccessToken
 };

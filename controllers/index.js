@@ -4,6 +4,7 @@ const viewUser = require("./viewUser");
 const uploadImg = require("./uploadImg");
 const getImageData = require("./getImg");
 const deleteImg = require("./deleteImg")
+const verifyUsers = require("./verifyUsers")
 
 module.exports = {
     createUser,
@@ -11,5 +12,6 @@ module.exports = {
     viewUser,
     uploadImg,
     getImageData,
-    deleteImg
+    deleteImg,
+    verifyUsers
 };

@@ -11,7 +11,8 @@ const {
     viewUser,
     uploadImg,
     getImageData,
-    deleteImg
+    deleteImg,
+    verifyUsers
 } = require("./controllers");
 
 
@@ -29,6 +30,7 @@ app.get("/v1/user/self", viewUser);
 app.post("/v1/user/self/pic", uploadImg);
 app.get("/v1/user/self/pic", getImageData);
 app.delete("/v1/user/self/pic", deleteImg);
+app.get("/v1/verifyUserEmail", verifyUsers);
 app.get("/healthz", (req, res) => {
     sdc.increment('endpoint.user.get - healthz');
     try {
