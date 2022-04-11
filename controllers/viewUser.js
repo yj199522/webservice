@@ -36,11 +36,8 @@ const viewUser = (req, res) => {
                             const data = result.rows[0];
                             delete data["password"];
                             if (!data.verified) {
-                                logger.error('User not Verified to perform get operation');
-                                return res.status(400).json({
-                                    status: 400,
-                                    error: 'User not Verified to perform get operation'
-                                });
+                                logger.error('User not Verified');
+                                return res.status(400).json('User not Verified');
                             } else {
                                 logger.info("User detailed viewed for username: " + username);
                                 return res.status(200).json(data);

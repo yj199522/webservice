@@ -36,11 +36,8 @@ const getImageData = (req, res) => {
                     .then(compareValue => {
                         if (compareValue) {
                             if (!verified) {
-                                logger.error('User not Verified to perform get operation');
-                                return res.status(400).json({
-                                    status: 400,
-                                    error: 'User not Verified to perform get operation'
-                                });
+                                logger.error('User not Verified');
+                                return res.status(400).json('User not Verified');
                             } else {
                                 getImgData(req, res, id, username);
                             }

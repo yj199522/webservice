@@ -22,7 +22,7 @@ const updateUser = (req, res) => {
         return res.status(403).json("Forbidden Request");
     }
 
-    let queries = "SELECT password from users where username = $1";
+    let queries = "SELECT * from users where username = $1";
     let values = [username];
 
     pool.query(queries, values)
@@ -36,11 +36,8 @@ const updateUser = (req, res) => {
                     .then(compareValue => {
                         if (compareValue) {
                             if (!verified) {
-                                logger.error('User not Verified to perform get operation');
-                                return res.status(400).json({
-                                    status: 400,
-                                    error: 'User not Verified to perform get operation'
-                                });
+                                logger.error('User not Verified');
+                                return res.status(400).json('User not Verified');
                             } else {
                                 updateData(req, res, username);
                             }
