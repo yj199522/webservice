@@ -19,7 +19,6 @@ sdc = new StatsD({
 const logger = require('../logger');
 
 const AWS = require("aws-sdk");
-const jwt = require('jsonwebtoken');
 
 const region = process.env.AWS_REGION;
 AWS.config.update({
@@ -88,7 +87,7 @@ const createUser = (req, res) => {
             let queries = "Select * from users where username = $1";
             pool.query(queries, [username], (err, result) => {
                 if (!result.rowCount) {
-                    queries = "INSERT INTO users(first_name, last_name, password, username, account_created, account_updated, id) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING id, first_name, last_name, username, account_created, account_updated";
+                    queries = "INSERT INTO users(first_name, last_name, password, username, account_created, account_updated, id, verified, verified_on) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING id, first_name, last_name, username, account_created, account_updated";
                     const values = [first_name, last_name, hashPassword, username, account_created, account_updated, id, false, account_updated];
                     pool.query(queries, values, (error, results) => {
                         if (error) {
