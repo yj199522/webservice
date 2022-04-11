@@ -19,7 +19,10 @@ const s3 = new AWS.S3({
 
 
 const StatsD = require('statsd-client');
-sdc = new StatsD({host: 'localhost', port: 8125});
+sdc = new StatsD({
+    host: 'localhost',
+    port: 8125
+});
 
 const logger = require('../logger');
 
@@ -39,12 +42,21 @@ const uploadImg = (req, res) => {
             if (result.rowCount) {
                 const {
                     password: hashPassword,
-                    id
+                    id,
+                    verified
                 } = result.rows[0];
                 comparePassword(hashPassword, password)
                     .then(compareValue => {
                         if (compareValue) {
-                            uploadImgData(req, res, id, username);
+                            if (!verified) {
+                                logger.error('User not Verified to perform get operation');
+                                return res.status(400).json({
+                                    status: 400,
+                                    error: 'User not Verified to perform get operation'
+                                });
+                            } else {
+                                uploadImgData(req, res, id, username);
+                            }
                         } else {
                             logger.error("Incorrect Password");
                             return res.status(401).json("Incorrect Password");

@@ -40,6 +40,7 @@ const verifyUsers = (req, res) => {
                     isTokenValid = true;
                 }
             }
+            
             if(isTokenValid) {
                 const text = 'UPDATE public.users SET verified = $1, verified_on = $2 WHERE username =$3'
                 const values = [true, new Date().toISOString(), username];

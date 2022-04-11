@@ -6,7 +6,10 @@ const {
 } = require("../utils/helper");
 
 const StatsD = require('statsd-client');
-sdc = new StatsD({host: 'localhost', port: 8125});
+sdc = new StatsD({
+    host: 'localhost',
+    port: 8125
+});
 
 const logger = require('../logger');
 
@@ -32,8 +35,16 @@ const viewUser = (req, res) => {
                         if (compareValue) {
                             const data = result.rows[0];
                             delete data["password"];
-                            logger.info("User detailed viewed for username: " + username);
-                            return res.status(200).json(data);
+                            if (!data.verified) {
+                                logger.error('User not Verified to perform get operation');
+                                return res.status(400).json({
+                                    status: 400,
+                                    error: 'User not Verified to perform get operation'
+                                });
+                            } else {
+                                logger.info("User detailed viewed for username: " + username);
+                                return res.status(200).json(data);
+                            }
                         } else {
                             logger.error("Incorrect Password");
                             return res.status(401).json("Incorrect Password");
