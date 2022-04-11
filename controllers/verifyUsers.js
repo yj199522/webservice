@@ -1,4 +1,4 @@
-const {client} = require('../connection.js');
+const pool = require("../db");
 const logger = require('../logger');
 var aws = require("aws-sdk");
 var dynamo = new aws.DynamoDB({ region: 'us-east-1'})
@@ -43,7 +43,7 @@ const verifyUsers = (req, res) => {
             if(isTokenValid) {
                 const text = 'UPDATE public.users SET verified = $1, verified_on = $2 WHERE username =$3'
                 const values = [true, new Date().toISOString(), username];
-                client.query(text, values, (error, results) => {
+                pool.query(text, values, (error, results) => {
                     if(error) {
                         logger.error('Error while verifying user');
                         return res.status(400).json({
