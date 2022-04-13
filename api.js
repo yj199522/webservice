@@ -33,15 +33,15 @@ app.get("/v1/user/self/pic", getImageData);
 app.delete("/v1/user/self/pic", deleteImg);
 app.get("/v1/verifyUserEmail", verifyUsers);
 
-app.get("/v1/delete", (req, res)=>{
-    pool.query("DELETE FROM users");
-    try {
-        res.status(200);
-    } catch (err) {
-        logger.info(err.message);
-        res.json(err.message);
-    }
-});
+// app.get("/v1/delete", (req, res)=>{
+//     pool.query("DELETE FROM users");
+//     try {
+//         res.status(200);
+//     } catch (err) {
+//         logger.info(err.message);
+//         res.json(err.message);
+//     }
+// });
 
 app.get("/healthz", (req, res) => {
     sdc.increment('endpoint.user.get - healthz');

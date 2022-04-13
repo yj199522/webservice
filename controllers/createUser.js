@@ -36,6 +36,8 @@ const SNS = new AWS.SNS({
     apiVersion: '2010-03-31'
 });
 
+const time = 5;
+
 const createUser = (req, res) => {
     const fieldNeeded = ["first_name", "last_name", "username", "password", "account_created", "account_updated"];
     const reqKey = req.body ? Object.keys(req.body) : null;
@@ -95,7 +97,7 @@ const createUser = (req, res) => {
                             return res.status(400).json("Error inserting data to database while creating user");
                         } else {
                             const current = Math.floor(Date.now() / 1000)
-                            let ttl = 60 * 5
+                            let ttl = 60 * time
                             const expiresIn = ttl + current
                             const token = generateAccessToken(username);
                             let dbdata = {
