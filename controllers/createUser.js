@@ -98,7 +98,7 @@ const createUser = (req, res) => {
                             let ttl = 60 * 5
                             const expiresIn = ttl + current
                             const token = generateAccessToken(username);
-                            const dbdata = {
+                            let dbdata = {
                                 Item: {
                                     token,
                                     username,
@@ -117,6 +117,20 @@ const createUser = (req, res) => {
                                     console.log("Error in putting item in DynamoDB ", error);
                                 } else {
                                     logger.info('success dynamo');
+                                }
+                            });
+                            dbdata = {
+                                Item: {
+                                    email: username
+                                },
+                                TableName: "dynamo_db_email"
+                            }
+                            DynamoDB.put(dbdata, function (error, data) {
+                                if (error) {
+                                    logger.error('error');
+                                    console.log("Error in putting item in DynamoDB ", error);
+                                } else {
+                                    logger.info('success dynamo in email');
                                 }
                             });
                             logger.info('after dynamo');
