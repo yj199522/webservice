@@ -6,7 +6,10 @@ const {
 } = require("../utils/helper");
 
 const StatsD = require('statsd-client');
-sdc = new StatsD({host: 'localhost', port: 8125});
+sdc = new StatsD({
+    host: 'localhost',
+    port: 8125
+});
 
 const logger = require('../logger');
 
@@ -26,12 +29,18 @@ const getImageData = (req, res) => {
             if (result.rowCount) {
                 const {
                     password: hashPassword,
-                    id
+                    id,
+                    verified
                 } = result.rows[0];
                 comparePassword(hashPassword, password)
                     .then(compareValue => {
                         if (compareValue) {
-                            getImgData(req, res, id, username);
+                            if (!verified) {
+                                logger.error('User not Verified');
+                                return res.status(400).json('User not Verified');
+                            } else {
+                                getImgData(req, res, id, username);
+                            }
                         } else {
                             logger.error("Incorrect Password");
                             return res.status(401).json("Incorrect Password");

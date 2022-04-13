@@ -14,7 +14,7 @@ pool.connect((err) => {
         throw err;
     }
     logger.info("users DB connected");
-    pool.query('create table if not exists public.users(id UUID NOT NULL,username VARCHAR(100),password VARCHAR(100),first_name VARCHAR(50),last_name VARCHAR(50),account_created timestamp with time zone,account_updated timestamp with time zone, PRIMARY KEY (id));',
+    pool.query('create table if not exists public.users(id UUID NOT NULL,username VARCHAR(100),password VARCHAR(100),first_name VARCHAR(50),last_name VARCHAR(50),account_created timestamp with time zone,account_updated timestamp with time zone,verified boolean, verified_on timestamp with time zone, PRIMARY KEY (id));',
         function (error, result) {
             logger.info("users DB created Successfully");
             console.log(result);

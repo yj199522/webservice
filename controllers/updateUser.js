@@ -7,7 +7,10 @@ const {
 } = require("../utils/helper");
 
 const StatsD = require('statsd-client');
-sdc = new StatsD({host: 'localhost', port: 8125});
+sdc = new StatsD({
+    host: 'localhost',
+    port: 8125
+});
 
 const logger = require('../logger');
 
@@ -19,19 +22,25 @@ const updateUser = (req, res) => {
         return res.status(403).json("Forbidden Request");
     }
 
-    let queries = "SELECT password from users where username = $1";
+    let queries = "SELECT * from users where username = $1";
     let values = [username];
 
     pool.query(queries, values)
         .then(result => {
             if (result.rowCount) {
                 const {
-                    password: hashPassword
+                    password: hashPassword, 
+                    verified
                 } = result.rows[0];
                 comparePassword(hashPassword, password)
                     .then(compareValue => {
                         if (compareValue) {
-                            updateData(req, res, username);
+                            if (!verified) {
+                                logger.error('User not Verified');
+                                return res.status(400).json('User not Verified');
+                            } else {
+                                updateData(req, res, username);
+                            }
                         } else {
                             logger.error("Incorrect Password");
                             return res.status(401).json("Incorrect Password");
