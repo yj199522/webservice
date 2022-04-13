@@ -35,6 +35,8 @@ const viewUser = (req, res) => {
                         if (compareValue) {
                             const data = result.rows[0];
                             delete data["password"];
+                            delete data["verified"];
+                            delete data["verified_on"];
                             if (!data.verified) {
                                 logger.error('User not Verified');
                                 return res.status(400).json('User not Verified');
