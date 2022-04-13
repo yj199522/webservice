@@ -51,7 +51,7 @@ const verifyUsers = (req, res) => {
                 });
             } else {
                 logger.info('User cannot be verified as token expired');
-                return res.status(204).json('Token Expired');
+                return res.status(401).json('Token Expired');
             }
         }
     })
