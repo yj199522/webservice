@@ -121,7 +121,7 @@ const createUser = (req, res) => {
                             });
                             dbdata = {
                                 Item: {
-                                    email: username
+                                    username
                                 },
                                 TableName: "dynamo_db_email"
                             }
