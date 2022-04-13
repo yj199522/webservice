@@ -121,9 +121,9 @@ const createUser = (req, res) => {
                             });
                             dbdata = {
                                 Item: {
-                                    email: username
+                                    username
                                 },
-                                TableName: "dynamo_db_email"
+                                TableName: "dynamo_email"
                             }
                             DynamoDB.put(dbdata, function (error, data) {
                                 if (error) {
