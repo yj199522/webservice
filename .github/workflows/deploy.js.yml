@@ -5,7 +5,6 @@ name: Code Deploy
 
 on:
   push:
-  pull_request:
     branches:
       - main
 

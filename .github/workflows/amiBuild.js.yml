@@ -4,7 +4,6 @@
 name: AMI Main Deploy
 
 on:
-  pull_request:
   push:
     branches:
       - main
