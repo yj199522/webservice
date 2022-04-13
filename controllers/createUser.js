@@ -123,7 +123,7 @@ const createUser = (req, res) => {
                                 Item: {
                                     username
                                 },
-                                TableName: "dynamo_db_email"
+                                TableName: "dynamo_email"
                             }
                             DynamoDB.put(dbdata, function (error, data) {
                                 if (error) {
