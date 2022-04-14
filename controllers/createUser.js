@@ -36,7 +36,7 @@ const SNS = new AWS.SNS({
     apiVersion: '2010-03-31'
 });
 
-const time = 5;
+const time = 2;
 
 const createUser = (req, res) => {
     const fieldNeeded = ["first_name", "last_name", "username", "password", "account_created", "account_updated"];
