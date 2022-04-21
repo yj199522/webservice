@@ -66,6 +66,7 @@
 
 ## Features
 * Rest Apis
+* Added SSL for database
 * Base Authentication
 * Password Encryption
 * Unit Testing
